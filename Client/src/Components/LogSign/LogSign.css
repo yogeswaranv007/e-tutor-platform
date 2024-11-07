@@ -1,0 +1,83 @@
+*{
+    font-family: 'Outfit',sans-serif;
+  }
+  
+  .logsign-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+  }
+  .tutor_logo span{
+    font-size: 32px;
+    font-weight: 700px;
+  }
+  .tutor_logo img
+  {
+    height: 35px;
+    margin-right: 10px;
+  }
+  .tutor_logo{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .logsign-form {
+    position: relative; /* Make sure the pseudo-element aligns within the form */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 350px; /* Adjust as needed */
+    background-color: white; /* Add a base background color */
+    overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
+  }
+  
+  .logsign-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .logsign-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #F7F2ED;
+    color: black;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+  .category-radio
+  {
+    margin: 10px 0;
+  }
+  
+  .logsign-button:hover {
+    opacity: 90%;
+  }
+  
+  .logsign-google-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FE6635;
+    color: white;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+  .logsign-google-button:hover {
+    opacity: 90%;
+  }
+.username-taken-msg{
+  color: red;
+}

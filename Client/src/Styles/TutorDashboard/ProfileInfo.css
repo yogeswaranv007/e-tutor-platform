@@ -1,0 +1,171 @@
+/* ProfileInfo styles */
+/* Container for the entire Profile Info */
+.profile-info-container {
+  background-color: #f9f5f1;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 115%;
+  max-width: 800px;
+  min-height: 950px;
+}
+
+/* Tutor Dashboard Title */
+.profile-info-container h2 {
+  text-align: center;
+  font-size: 32px;
+  margin: 1.5em 0;
+  font-weight: bold;
+  color: #000000;
+}
+
+/* Tutor Image */
+.profile-info-image {
+  display: block;
+  border-radius: 50%;
+  margin: 0 auto 15px auto;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 3px solid #ddd;
+}
+
+/* Tutor Name and Contact Details */
+.profile-info-name {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.profile-info-email,
+.profile-info-location {
+  text-align: center;
+  font-size: 24px;
+  color: #000000;
+  margin: 10px;
+}
+
+/* Horizontal line separator */
+.profile-info-separator {
+  margin: 20px 0;
+  border-top: 1px solid #ddd;
+}
+
+/* Specialization and Experience */
+.profile-info-specialization,
+.profile-info-experience {
+  margin-bottom: 10px;
+}
+
+.profile-info-specialization-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 2em;
+}
+
+/* Specialization badge with shadow and border-radius */
+.profile-info-specialization-badge {
+  display: inline-block;
+  background-color: #ffffff;
+  border-radius: 12px; /* Updated for rounded corners */
+  padding: 10px 24px;
+  font-size: 24px;
+  margin-right: 8px;
+  color: #000000;
+  margin: 10px 0;
+  margin-left: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+}
+
+/* Experience section */
+.profile-info-experience-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 1.5em;
+}
+
+.profile-info-experience-content {
+  font-size: 24px;
+  color: #000000;
+  margin: 10px;
+}
+
+/* Confirmed Sessions */
+.profile-info-confirmed-sessions {
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.profile-info-confirmed-sessions-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 1.5em;
+}
+
+/* Badges */
+.profile-info-badges {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #000000;
+}
+
+.profile-info-badges-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 1.5em;
+}
+
+/* No badges box with shadow and border-radius */
+.profile-info-no-badges {
+  background-color: #ffffff;
+  border-radius: 12px; /* Updated for rounded corners */
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  color: #888;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+}
+
+/* White box for Experience and Confirmed Sessions */
+.profile-info-box {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+
+/* Set Availability Button */
+.set-availability-btn {
+  background-color: #ff6e3d; /* Button color */
+  color: white; /* Text color */
+  border: none;
+  padding: 12px 20px; /* Adjusted padding for size */
+  font-size: 16px; /* Font size for button */
+  border-radius: 25px; /* Rounded corners for pill-like shape */
+  cursor: pointer;
+  text-align: center;
+  margin: 15px auto;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  display: block;
+  width: 70%; /* Width for better alignment */
+}
+
+.set-availability-btn:hover {
+  opacity: 0.9; /* Darker shade for hover */
+}
+
+/* Align and spacing for the button */
+.set-availability-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

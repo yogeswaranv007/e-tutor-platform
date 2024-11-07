@@ -1,0 +1,46 @@
+.completed-sessions {
+    padding: 20px 0;
+  }
+  
+  .completed-sessions h3 {
+    margin-bottom: 1rem;
+    font-size: 32px;
+  }
+  
+  .session-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #FE6635;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Left-align the subject */
+  .session-item span:first-child {
+    flex: 1;
+    text-align: left;
+    margin-left: 1rem;
+    font-weight: 500;
+  }
+  
+  /* Center-align date and time */
+  .session-item span:nth-child(2),
+  .session-item span:nth-child(3) {
+    flex: 2;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* Right-align the completed status */
+  .status-completed {
+    flex: 1;
+    text-align: right;
+    margin-right: 1rem;
+    font-weight: 500;
+    color: #fff;
+  }
+  

@@ -1,0 +1,22 @@
+*{
+  font-family: 'Outfit', sans-serif;
+}
+
+.tutor-dashboard {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    padding-top: 80px;
+  }
+  
+  .left-section {
+    flex: 0 0 25%;
+  }
+  
+  .right-section {
+    flex: 0 0 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  

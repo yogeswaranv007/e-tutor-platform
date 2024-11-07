@@ -1,0 +1,119 @@
+/* Main container for Booked Sessions */
+.booked-sessions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: calc(2 * 45em + 2em); /* Adjust width similar to Scheduled Lessons */
+    background-color: #F7F2ED;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
+  
+  /* Title styling */
+  .booked-sessions h3 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+  
+  /* Sessions container */
+  .sessions-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  /* Individual session box */
+  .session-box {
+    width: 381.938px; /* Same as Scheduled Lessons */
+    height: auto;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Session header to hold tutor image and options icon */
+  .session-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  
+  /* Tutor image styling */
+  .tutor-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto; /* Center the tutor image */
+  }
+  
+  /* ThreeDot options icon */
+  .options-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+  
+  /* Session content */
+  .session-content {
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: left;
+    margin-left: 7.5em;
+  }
+
+  .session-content h4
+  {
+    margin-left: 1.5em;
+    margin-bottom: 1rem;
+  }
+  
+  /* Start Live button */
+  .start-live-button {
+    background-color: #ff6e3d;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+  
+  .start-live-button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .booked-sessions {
+      padding: 1rem;
+    }
+  
+    .sessions-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .session-box {
+      width: 100%;
+    }
+  }
+  

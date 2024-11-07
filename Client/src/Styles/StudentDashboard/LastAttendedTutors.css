@@ -1,0 +1,51 @@
+.last-attended-tutors {
+  background-color: #F7F2ED;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Ensures contents are spaced evenly */
+  height: 118%; /* Set to take full available height */
+}
+
+
+
+.last-attended-tutors h3 {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+}
+
+.last-attended-tutors ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Ensure full width for alignment */
+  max-width: 300px; /* Optional: Control max width for better alignment */
+}
+
+.last-attended-tutors li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  background-color: #FFFFFF; /* Add background to each row */
+  padding: 5px; /* Padding for space inside */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+  justify-content: center; /* Center items horizontally */
+}
+
+.last-attended-tutors img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.last-attended-tutors span {
+  font-size: 1rem;
+  flex: 1; /* Ensure that span takes up available space */
+  text-align: left; /* Align text to the left */
+}

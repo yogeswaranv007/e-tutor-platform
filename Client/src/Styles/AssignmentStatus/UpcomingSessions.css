@@ -1,0 +1,30 @@
+.upcoming-sessions {
+    padding: 20px 0;
+  }
+
+  .upcoming-sessions h3{
+    margin-bottom: 1rem;
+    font-size: 32px;
+  }
+  
+  .upcoming-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+
+  }
+  
+  .upcoming-item span {
+    font-size: 24px;
+    font-weight: 500;
+    align-items: center;
+    margin: 0 1rem;
+  }
+  
+
+  

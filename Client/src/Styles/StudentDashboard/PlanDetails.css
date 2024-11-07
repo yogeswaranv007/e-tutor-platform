@@ -1,0 +1,51 @@
+.plan-details {
+  background-color: #F7F2ED;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Change from left to center */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 100%; /* Ensure it takes up available space */
+}
+
+.plan-details h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center; /* Ensure the heading is centered */
+}
+
+.plan-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem; /* Add padding to make it box-like */
+  background-color: #FFFFFF; /* Make it a distinct box */
+  border-radius: 10px; /* Round the corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  gap: 10px; /* Add gap between the list items */
+  width: 100%; /* Make the ul take up full width */
+  max-width: 400px; /* Optional: Control the max width */
+}
+
+.plan-details li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+/* Give box shadow */
+  display: flex;
+  justify-content: space-between; /* Align content inside the box */
+}
+
+.remaining-days {
+  color: #FF6C3C;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.plan-details strong {
+  margin-right: 10px;
+}

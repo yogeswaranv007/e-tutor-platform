@@ -1,0 +1,116 @@
+/* General container */
+.availability-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+    padding: 20px;
+  }
+  
+  .header h2 {
+    color: #ff6347; /* Orange color for header */
+    font-size: 24px;
+  }
+  
+  .availability-content {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Calendar Section */
+  .calendar-section {
+    background-color: #f9f4ef;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .calendar h3 {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .calendar .days {
+    display: flex;
+    gap: 5px;
+    margin: 10px 0;
+  }
+  
+  .calendar .days div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .calendar .days .selected {
+    background-color: #ff6347;
+    color: #fff;
+  }
+  
+  .time-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .time-slot {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .time-slot.selected {
+    background-color: #ff6347;
+    color: #fff;
+  }
+  
+  /* Availability Details Section */
+  .availability-details {
+    background-color: #f9f4ef;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+  }
+  
+  .availability-details h3 {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .confirm-button {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Confirmed Sessions Section */
+  .confirmed-sessions {
+    background-color: #f9f4ef;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+  }
+  
+  .confirmed-session {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  

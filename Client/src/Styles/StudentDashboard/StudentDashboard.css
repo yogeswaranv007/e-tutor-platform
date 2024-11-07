@@ -1,0 +1,37 @@
+/* StudentDashboard.css */
+
+.student-dashboard {
+    font-family: 'Outfit', sans-serif;
+    padding-top: 80px;
+    padding-bottom: 50px;
+  }
+  
+  .dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 2rem;
+  }
+  
+  .left-side, .right-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .dashboard-container {
+      grid-template-columns: 1fr; /* One column layout for mobile devices */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .navbar-nav {
+      display: none;
+    }
+  
+    .navbar-login {
+      margin-left: auto;
+    }
+  }

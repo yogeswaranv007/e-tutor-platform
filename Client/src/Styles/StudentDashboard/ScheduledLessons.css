@@ -1,0 +1,116 @@
+.scheduled-lessons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%; /* Full width to ensure it stretches across the page */
+  max-width: calc(2 * 45em + 2em); /* Max width based on two lesson boxes */
+  height: 60%; /* Height will adjust based on content */
+  background-color: #F7F2ED; /* Background color */
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  margin: 0 auto; /* Center the scheduled lessons container */
+}
+
+.scheduled-lessons h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: left; /* Keep the text left-aligned */
+}
+
+.lessons-container {
+  display: flex;
+  justify-content: space-between; /* Space between the two lesson boxes */
+  gap: 20px; /* Space between two lesson boxes */
+}
+
+.lesson-box {
+  width: 381.938px; /* Set the exact width for the lesson box */
+  height: auto; /* Set height to auto to accommodate content */
+  flex-shrink: 0;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Align items to the start */
+  position: relative;
+}
+
+.lesson-header {
+  display: flex;
+  justify-content: space-between; /* Space between the tutor image and options icon */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Full width to ensure proper alignment */
+  margin-bottom: 1rem;
+}
+
+.tutor-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto; /* Center the tutor image */
+}
+
+.options-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin: 1.5em;
+}
+
+.lesson-content {
+  text-align: center; /* Center the content within each lesson box */
+  width: 100%; /* Ensure text spans the full width */
+}
+
+.lesson-content p {
+  font-size: 1rem;
+  margin: 0.5rem 0; /* More space above the text and less between texts */
+}
+
+.lesson-content button {
+  background-color: #FF6C3C;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: bold;
+  align-self: center; /* Ensure the button is centered */
+}
+
+.lesson-content button:hover {
+  opacity: 0.9;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .scheduled-lessons {
+    padding: 1rem; /* Adjust padding for mobile */
+  }
+
+  .lessons-container {
+    flex-direction: column; /* Stack lessons vertically on smaller screens */
+    gap: 10px; /* Reduce gap between stacked lessons */
+  }
+
+  .lesson-box {
+    width: 100%; /* Full width on mobile */
+    height: auto; /* Auto height to accommodate content */
+  }
+
+  .lesson-header {
+    flex-direction: row; /* Keep items in header horizontally aligned */
+    align-items: center; /* Align items to the center */
+  }
+
+  .tutor-image {
+    width: 60px; /* Smaller image on mobile */
+    height: 60px; /* Smaller image on mobile */
+  }
+}

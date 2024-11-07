@@ -1,0 +1,84 @@
+/* Header.css */
+
+.navbar {
+  background-color: #172138;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.navbar-logo span {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: auto; /* Push links to the left */
+}
+
+.navbar-item a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.navbar-item a:hover {
+  color: #FF6C3C;
+}
+
+/* Header.css */
+
+.profile-link {
+  text-decoration: none; /* Remove underline from link */
+  color: inherit; /* Inherit the text color */
+  display: flex; /* Make the link a flexbox to align image and text */
+  align-items: center;
+  gap: 0.5rem; /* Space between image and name */
+}
+
+.profile-link:hover {
+  opacity: 0.8; /* Optional: Add hover effect */
+}
+
+
+.navbar-login {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Smaller gap between the image and text */
+}
+.navbar-login span{
+  margin-right: 1.5em;;
+}
+
+.log-out-btn {
+  background-color: #FF6C3C;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.log-out-btn:hover {
+  opacity: 0.9;
+}
+
+/* Add this style to center the content */
+.navbar-nav {
+  margin-left: 3.5rem; /* Ensure the nav links are centered on the left */
+}
