@@ -1,0 +1,74 @@
+*{
+    font-family: 'Outfit',sans-serif;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    background-color: #172138; 
+    color: #fff;
+    position: fixed; 
+    left: 0;
+    right: 0;
+    width: 100%; 
+    box-sizing: border-box;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-logo img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .navbar-title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navbar-links {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    margin-left: 50px;
+  }
+  
+  .navbar-links a {
+    color: #ffffff;
+    margin: 0 20px;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .navbar-links a:hover {
+    color: #f27f2d; /* Orange hover effect */
+  }
+  
+  .navbar-buttons .btn-signup,
+  .navbar-buttons .btn-login {
+    background-color: #F7F2ED;
+    ;
+    color: #f27f2d;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .navbar-buttons .btn-login {
+    background-color: #f27f2d; /* Orange button */
+    color: white;
+  }
+  
+  .navbar-buttons .btn-login:hover,
+  .navbar-buttons .btn-signup:hover {
+    opacity: 80%;
+    transition: 0.3s ease;
+  }

@@ -1,0 +1,121 @@
+.subscription-section {
+    background-image: url('../assets/background-image.png');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .subscription-title {
+    font-size: 2.5rem;
+    font-weight: 100;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
+  }
+  
+  .plans-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .plan-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    width: 300px;
+    height: 500px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .plan-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FE6635;
+    margin-bottom: 20px;
+  }
+  
+  .plan-price {
+    font-size: 2.5rem;
+    font-weight:500;
+    color: #333;
+    margin: 10px 0;
+  }
+  
+  .plan-price span {
+    font-size: 50px;
+    color: #333;
+    font-weight:100;
+  }
+
+  .standard-plan .plan-price span{
+    font-size: 50px;
+    color: #fff;
+  } 
+  
+  .plan-benefits {
+    list-style-type: none;
+    padding: 0;
+    color: #555;
+    margin: 20px 0;
+    text-align: left;
+  }
+  
+  .plan-benefits li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .tick-icon {
+    color: #333;
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
+  
+  .subscribe-button {
+    background-color: #FE6635;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+  }
+  
+  .subscribe-button:hover {
+    background-color: #FE6635; 
+  }
+  
+  .standard-plan {
+    background-color: #FE6635;
+    color: #fff;
+  }
+  
+  .standard-plan .plan-title,
+  .standard-plan .plan-price,
+  .standard-plan .plan-benefits li {
+    color: #fff;
+  }
+  
+  .standard-plan .subscribe-button {
+    background-color: #fff;
+    color: #FE6635;
+  }
+  
+  .standard-plan .subscribe-button:hover {
+    background-color: #f2f2f2;
+  }
+  

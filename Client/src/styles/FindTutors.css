@@ -1,0 +1,146 @@
+
+body {
+  background-color: #F7F2ED;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.find-tutors-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: #F7F2ED;
+  font-family: 'outfit', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.search-section {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.search-section h2 {
+  font-size: 30px;
+  color: #333;
+  margin-top: 60px;
+}
+
+.main-content {
+  display: flex;
+  padding: 20px;
+}
+
+.filters {
+  flex: 1;
+  max-width: 200px;
+  margin-right: 20px;
+}
+
+filters h2{
+  font-size: 25px;
+}
+
+.filters h3 {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.filters select,
+.filters .checkbox-group label {
+  display: block;
+  margin: 10px 0;
+}
+
+.tutor-profiles {
+  flex: 3;
+}
+
+.sort-by {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  margin-right: 60px;
+}
+
+.sort-by label {
+  margin-right: 10px;
+}
+
+.sort-by select {
+  padding: 5px;
+}
+
+.tutor-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  width: 950px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 20px;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.tutor-details {
+  flex: 2;
+}
+
+.tutor-details h2 {
+  font-size: 25px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.tutor-details p {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0;
+}
+
+.tutor-ratings {
+  text-align: center;
+  margin-right: 30px;
+}
+
+.tutor-ratings p {
+  margin: 4px 0;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+}
+
+.star-rating {
+  margin-bottom: 5px;
+  /* Add star icons here */
+}
+
+.view-profile-btn {
+  background-color: #FE6635;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-profile-btn:hover {
+  background-color: #FE6635;
+}

@@ -1,0 +1,156 @@
+*{
+  font-family: 'outfit',sans-serif;
+}
+
+.payment-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+  width: 100vw;
+  height: 100vh;
+}
+
+
+.payment-page h2 {
+  font-size: 24px;
+  margin-bottom: 40px;
+  margin-left: 400px;
+  font-size: 30px;
+}
+
+.payment-page .highlight {
+  color: #FE6635;
+}
+
+.payment-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.payment-info {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;
+  margin-left: 150px;
+}
+
+.plan-details {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 25%;
+  height: fit-content;
+}
+
+.payment-info h3, .plan-details h3 {
+  background-color: #FE6635;
+  color: #fff;
+  padding: 10px 20px;
+  margin: -20px -20px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 18px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.required {
+  color: #ff0000;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.card-icons {
+  position: absolute;
+  top: 70%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+.Visaicon{
+  margin-top: 7px;
+  width: 30px;
+  height:20px;
+}
+
+.Mastericon{
+  margin-top: 2px;
+  width: 30px;
+  height:30px;
+}
+
+.proceed-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #FE6635;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.proceed-button:hover {
+  background-color: #ff7a4d;
+}
+
+.or-text {
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
+  font-weight: bold;
+}
+
+.gpay-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.gpay-icon {
+  height: 24px;
+  margin-right: 10px;
+}
+
+.plan-details p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.plan-details p strong {
+  color: #333;
+}

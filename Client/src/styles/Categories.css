@@ -1,0 +1,60 @@
+*{
+    font-family: 'outfit',sans-serif;
+}
+
+.categories-section {
+    background-image: url('../assets/background-image.png');
+    background-color: #f7f2ed;
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .categories-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
+  }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    column-gap: 80px;
+    row-gap: 40px;
+    justify-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .category-box {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    width: 100%; 
+    height: 100px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .category-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .category-icon {
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
+  }
+  
+  .category-box p {
+    font-size: 1rem;
+    color: #333;
+    margin-left: 30px;
+  }
+  
