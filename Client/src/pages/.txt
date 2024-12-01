@@ -1,0 +1,132 @@
+<div className="sort-by">
+            <label>Sort By:</label>
+            <select>
+              <option>Select</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Ratings</option>
+              <option>Experience</option>
+            </select>
+          </div>
+          <div className="tutor-card">
+            <img src={ProfileImage1} alt="Tutor Profile" className="profile-pic" />
+            <div className="tutor-details">
+              <h2>Ana de Armas</h2>
+              <p>Engineer with Extensive Algebra Knowledge and Tutoring Experience</p>
+              <p style={{fontSize:18,color:"#333"}}>Hourly rate: Rs.100</p>
+            </div>
+            <div className="tutor-ratings">
+              <p style={{color:"#FE6635", fontSize:25}}>Ratings</p>
+              <div className="star-rating">
+                <img src={StarImage} alt="Star rating" />
+              </div>
+              <p>5.0 (123)</p>
+              <p>1608 hours of Tutoring</p>
+              <button className="view-profile-btn">View Profile</button>
+            </div>
+          </div>
+
+          <div className="tutor-card">
+            <img src={ProfileImage2} alt="Tutor Profile" className="profile-pic" />
+            <div className="tutor-details">
+              <h2>Sydney Sweeney</h2>
+              <p>Experienced Tutor with 5+ Years Teaching High School/Undergrad Math</p>
+              <p style={{fontSize:18,color:"#333"}}>Hourly rate: Rs.150</p>
+            </div>
+            <div className="tutor-ratings">
+              <p style={{color:"#FE6635", fontSize:25}}>Ratings</p>
+              <div className="star-rating">
+                <img src={StarImage} alt="Star rating" />
+              </div>
+              <p>5.0 (100)</p>
+              <p>1412 hours of Tutoring</p>
+              <button className="view-profile-btn">View Profile</button>
+            </div>
+          </div>
+          
+          <div className="tutor-card">
+            <img src={ProfileImage3} alt="Tutor Profile" className="profile-pic" />
+            <div className="tutor-details">
+              <h2>Joseph</h2>
+              <p>Experience in AI with Computer vision @Google</p>
+              <p style={{fontSize:18,color:"#333"}}>Hourly rate: Rs.150</p>
+            </div>
+            <div className="tutor-ratings">
+              <p style={{color:"#FE6635", fontSize:25}}>Ratings</p>
+              <div className="star-rating">
+                <img src={StarImage} alt="Star rating" />
+              </div>
+              <p>5.0 (700)</p>
+              <p>1412 hours of Tutoring</p>
+              <button className="view-profile-btn">View Profile</button>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div className="tutor-card">
+            <img src={ProfileImage1} alt="Tutor Profile" className="profile-pic" />
+            <div className="tutor-details">
+              <h2>Ana de Armas</h2>
+              <p>Engineer with Extensive Algebra Knowledge and Tutoring Experience</p>
+              <p style={{fontSize:18,color:"#333"}}>Hourly rate: Rs.100</p>
+            </div>
+            <div className="tutor-ratings">
+              <p style={{color:"#FE6635", fontSize:25}}>Ratings</p>
+              <div className="star-rating">
+                <img src={StarImage} alt="Star rating" />
+              </div>
+              <p>5.0 (123)</p>
+              <p>1608 hours of Tutoring</p>
+              <button className="view-profile-btn">View Profile</button>
+            </div>
+          </div>
+
+          <div className="tutor-card">
+            <img src={ProfileImage2} alt="Tutor Profile" className="profile-pic" />
+            <div className="tutor-details">
+              <h2>Sydney Sweeney</h2>
+              <p>Experienced Tutor with 5+ Years Teaching High School/Undergrad Math</p>
+              <p style={{fontSize:18,color:"#333"}}>Hourly rate: Rs.150</p>
+            </div>
+            <div className="tutor-ratings">
+              <p style={{color:"#FE6635", fontSize:25}}>Ratings</p>
+              <div className="star-rating">
+                <img src={StarImage} alt="Star rating" />
+              </div>
+              <p>5.0 (100)</p>
+              <p>1412 hours of Tutoring</p>
+              <button className="view-profile-btn">View Profile</button>
+            </div>
+          </div>
+          
+          <div className="tutor-card">
+            <img src={ProfileImage3} alt="Tutor Profile" className="profile-pic" />
+            <div className="tutor-details">
+              <h2>Joseph</h2>
+              <p>Experience in AI with Computer vision @Google</p>
+              <p style={{fontSize:18,color:"#333"}}>Hourly rate: Rs.150</p>
+            </div>
+            <div className="tutor-ratings">
+              <p style={{color:"#FE6635", fontSize:25}}>Ratings</p>
+              <div className="star-rating">
+                <img src={StarImage} alt="Star rating" />
+              </div>
+              <p>5.0 (700)</p>
+              <p>1412 hours of Tutoring</p>
+              <button className="view-profile-btn">View Profile</button>
+            </div>

@@ -3,8 +3,8 @@
 }
 
 .categories-section {
-    background-image: url('../assets/background-image.png');
-    background-color: #f7f2ed;
+    background-image: url('../../assets/background-image.png');
+    background-color: #FFF1E4;
     background-size: cover;
     background-position: center;
     padding: 60px 20px;

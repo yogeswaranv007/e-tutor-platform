@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/SubscriptionPlans.css';
-import tickIcon from '../assets/tick-icon.png';
+import '../../styles/homepage/SubscriptionPlans.css';
+import tickIcon from '../../assets/tick-icon.png';
 
 const SubscriptionPlans = () => {
   const navigate = useNavigate();

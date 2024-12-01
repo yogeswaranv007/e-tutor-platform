@@ -1,18 +1,22 @@
 import React from 'react';
-import Banner from '../components/Banner';
-import StepSection from '../components/StepSection';
-import Categories from '../components/Categories';
-import SubscriptionPlans from '../components/SubscriptionPlans';
-import Footer from '../components/Footer';
+import Banner from '../components/homepage/Banner';
+import StepSection from '../components/homepage/StepSection';
+import Categories from '../components/homepage/Categories';
+import SubscriptionPlans from '../components/homepage/SubscriptionPlans';
+import Footer from '../components/common/Footer';
+import '../styles/HomePage.css';
+
 
 function HomePage() {
   return (
     <div>
+      <div className='homepage'>
       <Banner />
       <StepSection />
       <Categories />
       <SubscriptionPlans />
       <Footer />
+    </div>
     </div>
   );
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import '../styles/Categories.css';
-import businessIcon from '../assets/business-icon.png'; 
-import softwareIcon from '../assets/software-icon.png';
-import financeIcon from '../assets/finance-icon.png';
-import personalIcon from '../assets/personal-icon.png';
-import designIcon from '../assets/design-icon.png';
-import marketingIcon from '../assets/marketing-icon.png';
-import healthIcon from '../assets/health-icon.png';
-import photoIcon from '../assets/photo-icon.png';
+import '../../styles/homepage/Categories.css';
+import businessIcon from '../../assets/business-icon.png'; 
+import softwareIcon from '../../assets/software-icon.png';
+import financeIcon from '../../assets/finance-icon.png';
+import personalIcon from '../../assets/personal-icon.png';
+import designIcon from '../../assets/design-icon.png';
+import marketingIcon from '../../assets/marketing-icon.png';
+import healthIcon from '../../assets/health-icon.png';
+import photoIcon from '../../assets/photo-icon.png';
 
 const Categories = () => {
   return (

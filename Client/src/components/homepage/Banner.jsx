@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/Banner.css';
-import rightImage from '../assets/Banner-image.png'; 
-import searchIcon from '../assets/search-icon.png'; 
+import '../../styles/homepage/Banner.css';
+import rightImage from '../../assets/Banner-image.png'; 
+import searchIcon from '../../assets/search-icon.png'; 
 
 const Banner = () => {
   return (
@@ -17,7 +17,6 @@ const Banner = () => {
             <img src={rightImage} alt="Tutoring session" />
           </div>
         </div>
-
         <div className="search-bar">
           <input type="text" placeholder="What would you like to learn?" />
           <button className="search-button">

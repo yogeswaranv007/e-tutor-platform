@@ -1,12 +1,19 @@
-import React from 'react';
-import SearchBar from '../components/SearchBar';
+import React, { useState } from 'react';
+import SearchBar from '../components/common/SearchBar';
 import '../styles/FindTutors.css';
 import ProfileImage1 from '../assets/Ana_de_armas.png';
 import StarImage from '../assets/Star-image.png';
 import ProfileImage2 from '../assets/Sydney_Sweeney.png';
 import ProfileImage3 from '../assets/Joseph.svg';
+import dropdownIcon from '../assets/dropdown-icon.png';
 
 function FindTutors() {
+  const [sortByOpen, setSortByOpen] = useState(false);
+
+  const toggleSortByDropdown = () => {
+    setSortByOpen(!sortByOpen);
+  };
+
   return (
     <div className="find-tutors-page">
       <div className="search-section">
@@ -24,43 +31,66 @@ function FindTutors() {
           </div>
 
           <h3>Language</h3>
-          <select>
-            <option>English</option>
-            <option>Spanish</option>
-            <option>French</option>
-          </select>
+          <div className="custom-dropdown">
+            <select>
+              <option>Select</option>
+              <option>English</option>
+              <option>Spanish</option>
+              <option>French</option>
+            </select>
+            <img src={dropdownIcon} alt="Dropdown Icon" className="dropdown-icon" />
+          </div>
 
           <h3>Subject</h3>
-          <select>
-            <option>Algebra</option>
-            <option>Geometry</option>
-            <option>Calculus</option>
-          </select>
+          <div className="custom-dropdown">
+            <select>
+              <option>Select</option>
+              <option>Algebra</option>
+              <option>Geometry</option>
+              <option>Calculus</option>
+            </select>
+            <img src={dropdownIcon} alt="Dropdown Icon" className="dropdown-icon" />
+          </div>
 
           <h3>Price</h3>
-          <select>
-            <option>Rs. 0 - Rs. 500</option>
-            <option>Rs. 500 - Rs. 1000</option>
-            <option>Rs. 1000 - Rs. 1500</option>
-          </select>
+          <div className="custom-dropdown">
+            <select>
+              <option>Select</option>
+              <option>Rs. 0 - Rs. 500</option>
+              <option>Rs. 500 - Rs. 1000</option>
+              <option>Rs. 1000 - Rs. 1500</option>
+            </select>
+            <img src={dropdownIcon} alt="Dropdown Icon" className="dropdown-icon" />
+          </div>
 
           <h3>Experience</h3>
-          <select>
-            <option>Less than 1 year</option>
-            <option>1 - 3 years</option>
-            <option>3 - 5 years</option>
-            <option>5+ years</option>
-          </select>
+          <div className="custom-dropdown">
+            <select>
+              <option>Select</option>
+              <option>Less than 1 year</option>
+              <option>1 - 3 years</option>
+              <option>3 - 5 years</option>
+              <option>5+ years</option>
+            </select>
+            <img src={dropdownIcon} alt="Dropdown Icon" className="dropdown-icon" />
+          </div>
         </div>
+        
         <div className="tutor-profiles">
           <div className="sort-by">
             <label>Sort By:</label>
-            <select>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Ratings</option>
-              <option>Experience</option>
-            </select>
+            <div className="custom-dropdown" onClick={toggleSortByDropdown}>
+              <span>Price: Low to High</span>
+              <img src={dropdownIcon} alt="Dropdown Icon" className="dropdown-icon" />
+            </div>
+            {sortByOpen && (
+              <div className="sort-options">
+                <div onClick={() => setSortByOpen(false)}>Price: Low to High</div>
+                <div onClick={() => setSortByOpen(false)}>Price: High to Low</div>
+                <div onClick={() => setSortByOpen(false)}>Ratings</div>
+                <div onClick={() => setSortByOpen(false)}>Experience</div>
+              </div>
+            )}
           </div>
           <div className="tutor-card">
             <img src={ProfileImage1} alt="Tutor Profile" className="profile-pic" />
@@ -114,9 +144,9 @@ function FindTutors() {
               <p>1412 hours of Tutoring</p>
               <button className="view-profile-btn">View Profile</button>
             </div>
-          </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

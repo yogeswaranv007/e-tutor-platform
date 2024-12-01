@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import FindTutors from "./pages/FindTutors";
-import SubscriptionPlans from "./components/SubscriptionPlans";
-import PaymentPage from "./pages/SubscribePage";
+import Navbar from "./components/common/Navbar";
+import HomePage from "./Pages/HomePage";
+import FindTutors from "./Pages/FindTutors";
+import SubscriptionPlans from "./components/homepage/SubscriptionPlans";
+import PaymentPage from "./Pages/SubscribePage";
 
 function App() {
   return (

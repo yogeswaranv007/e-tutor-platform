@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/navbar.css';
-import logo from '../assets/logo.png';
+import '../../styles/common/navbar.css';
+import logo from '../../assets/logo.png';
 import Modal from './Modal';
-import LoginPage from '../pages/LoginPage';
+import LoginPage from '../../Pages/LoginPage';
 
 const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

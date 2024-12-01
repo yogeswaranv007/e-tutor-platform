@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/StepSection.css';
-import tutorIcon from '../assets/tutor-icon.png';
-import calendarIcon from '../assets/calendar-icon.png'; 
-import assignmentIcon from '../assets/assignment-icon.png';
+import '../../styles/homepage/StepSection.css';
+import tutorIcon from '../../assets/tutor-icon.png';
+import calendarIcon from '../../assets/calendar-icon.png'; 
+import assignmentIcon from '../../assets/assignment-icon.png';
 const StepSection = () => {
   return (
     <div className="step-section">

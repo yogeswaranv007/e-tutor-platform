@@ -3,7 +3,7 @@
 }
 
 .step-section {
-    background-image: url('../assets/background-image.png'); /* Replace with actual background path */
+    background-image: url('../../assets/background-image.png'); /* Replace with actual background path */
     background-size: cover;
     background-position: center;
     padding: 60px 20px;

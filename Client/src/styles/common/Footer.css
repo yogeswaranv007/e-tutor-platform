@@ -77,18 +77,16 @@
   
   .footer-bottom {
     display: flex;
-    border-top: 1px solid #555;
+    justify-content: space-between; /* This aligns p and a tags to opposite ends */
+    align-items: center; /* Optional: vertically centers the content */
+    border-top: 1px solid #fff;
+    padding-left: 30px;
     padding-top: 10px;
-    font-size: 14px;
   }
-  .footer-bottom p{
-    margin-left: 30px;
-  }
-  
   .footer-email {
     color: #ffffff;
     text-decoration: none;
-    margin-right: 50px;
+    margin-right: 10px;
   }
   
   .footer-email:hover {
