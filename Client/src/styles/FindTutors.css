@@ -1,13 +1,11 @@
-
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
 .find-tutors-page {
-  height:fit-content;
+  height: fit-content;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -17,7 +15,6 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
 
 .search-section {
   text-align: center;
@@ -41,7 +38,7 @@ body {
   margin-top: 0px;
 }
 
-filters h2{
+.filters h2 {
   font-size: 25px;
 }
 
@@ -54,7 +51,7 @@ filters h2{
 .filters select,
 .filters .checkbox-group label {
   display: block;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .tutor-profiles {
@@ -64,17 +61,77 @@ filters h2{
 
 .sort-by {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   margin-bottom: 20px;
-  margin-right: 60px;
+  margin-right: 50px;
+  position: relative;
 }
 
 .sort-by label {
   margin-right: 10px;
+  font-size: 16px;
+  color: #333;
 }
 
-.sort-by select {
-  padding: 5px;
+.sort-by .custom-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 180px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.sort-by .custom-dropdown select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #333;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+}
+
+.sort-by .custom-dropdown .dropdown-icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.sort-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10;
+  width: 180px;
+}
+
+.sort-options div {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s;
+}
+
+.sort-options div:hover {
+  background-color: #f1f1f1;
 }
 
 .tutor-card {
@@ -145,72 +202,44 @@ filters h2{
   background-color: #FE6635;
 }
 
-
-.filters select,
-.sort-by select {
-  appearance: none; 
-  -webkit-appearance: none; 
-  -moz-appearance: none; 
-  background-color: #ffffff; 
-  border: none; 
-  padding: 10px 15px; 
-  border-radius: 5px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  font-family: 'Outfit', sans-serif; 
-  font-size: 14px;
-  color: #333;
-  cursor: pointer;
-  width: 100%; 
-  max-width: 150px; 
-}
-
-.filters select,
-.filters .checkbox-group label {
-  margin: 15px 0; 
-}
-
-
-
-
 .custom-dropdown {
   position: relative;
   display: inline-block;
-  cursor: pointer;
   width: 100%;
-  max-width: 150px;
+  max-width: 180px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .custom-dropdown select {
-  width: 200px;
-  padding: 10px;
-  border: none;
-  border-radius: 20px;
   appearance: none;
-  background-color: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding-left: 20px;
   font-size: 14px;
   color: #333;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 0px;
 }
 
-.dropdown-icon {
+.custom-dropdown .dropdown-icon {
   position: absolute;
-  right: 10px;
   top: 50%;
+  right: 16px;
   transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
   pointer-events: none;
-  width: 15px;
-  height: 15px;
 }
 
-/* Style for Sort By options dropdown */
-.sort-by {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+.sort-by .custom-dropdown {
   position: relative;
+  display: inline-block;
+  max-width: 200px;
 }
 
 .sort-options {
@@ -219,20 +248,83 @@ filters h2{
   right: 0;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  border-radius: 8px;
   overflow: hidden;
   z-index: 10;
+  width: 200px;
 }
 
 .sort-options div {
-  padding: 10px 20px;
+  padding: 12px 16px;
   cursor: pointer;
   font-size: 14px;
   color: #333;
-  transition: background 0.2s;
+  transition: background-color 0.2s;
 }
 
 .sort-options div:hover {
   background-color: #f1f1f1;
 }
 
+
+
+.custom-dropdown select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  padding-left: 20px;
+  font-size: 14px;
+  color: #333;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-dropdown select:focus,
+.sort-by .custom-dropdown select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.custom-dropdown .dropdown-icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.sort-by .custom-dropdown {
+  position: relative;
+  display: inline-block;
+  max-width: 200px;
+}
+
+.sort-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10;
+  width: 200px;
+}
+
+.sort-options div {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s;
+}
+
+.sort-options div:hover {
+  background-color: #f1f1f1;
+}

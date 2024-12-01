@@ -4,7 +4,6 @@ import StepSection from '../components/homepage/StepSection';
 import Categories from '../components/homepage/Categories';
 import SubscriptionPlans from '../components/homepage/SubscriptionPlans';
 import Footer from '../components/common/Footer';
-import '../styles/HomePage.css';
 
 
 function HomePage() {
