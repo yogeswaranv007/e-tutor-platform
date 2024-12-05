@@ -1,0 +1,156 @@
+.profile-info-container {
+  background-color: #f9f5f1;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 115%;
+  max-width: 800px;
+  min-height: 950px;
+}
+
+.profile-info-container h2 {
+  text-align: center;
+  font-size: 32px;
+  margin: 1.5em 0;
+  font-weight: bold;
+  color: #000000;
+}
+
+.profile-info-image {
+  display: block;
+  border-radius: 50%;
+  margin: 0 auto 15px auto;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 3px solid #ddd;
+}
+
+.profile-info-name {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.profile-info-email,
+.profile-info-location {
+  text-align: center;
+  font-size: 24px;
+  color: #000000;
+  margin: 10px;
+}
+
+.profile-info-separator {
+  margin: 20px 0;
+  border-top: 1px solid #ddd;
+}
+
+.profile-info-specialization,
+.profile-info-experience {
+  margin-bottom: 10px;
+}
+
+.profile-info-specialization-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 2em;
+}
+
+.profile-info-specialization-badge {
+  display: inline-block;
+  background-color: #ffffff;
+  border-radius: 12px; 
+  padding: 10px 24px;
+  font-size: 24px;
+  margin-right: 8px;
+  color: #000000;
+  margin: 10px 0;
+  margin-left: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info-experience-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 1.5em;
+}
+
+.profile-info-experience-content {
+  font-size: 24px;
+  color: #000000;
+  margin: 10px;
+}
+
+.profile-info-confirmed-sessions {
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.profile-info-confirmed-sessions-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 1.5em;
+}
+
+.profile-info-badges {
+  margin-top: 10px;
+  font-size: 24px;
+  color: #000000;
+}
+
+.profile-info-badges-head {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+  margin-top: 1.5em;
+}
+
+.profile-info-no-badges {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  color: #888;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info-box {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+}
+
+.set-availability-btn {
+  background-color: #ff6e3d;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  text-align: center;
+  margin: 15px auto;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  display: block;
+  width: 70%;
+}
+
+.set-availability-btn:hover {
+  opacity: 0.9;
+}
+
+.set-availability-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

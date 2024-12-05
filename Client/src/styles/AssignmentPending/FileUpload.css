@@ -1,0 +1,22 @@
+.file-upload {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .file-upload p {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .file-upload button {
+    background-color: #FE6635;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

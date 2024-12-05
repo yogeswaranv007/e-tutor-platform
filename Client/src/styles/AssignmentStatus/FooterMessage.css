@@ -1,0 +1,30 @@
+.footer-message {
+    text-align: center;
+    padding: 20px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footer-message p {
+    font-size: 32px;
+    font-weight: 500;
+    color: #333;
+    margin: 10px;
+  }
+  
+  .footer-message button {
+    background-color: #F7F2ED;
+    color: #FE6635;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 0.2rem;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+   .footer-message button:hover{
+    opacity: 0.8;
+   }  

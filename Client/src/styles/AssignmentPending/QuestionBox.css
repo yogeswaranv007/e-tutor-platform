@@ -1,0 +1,30 @@
+.question-box {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+h3 {
+    font-size: 32px;
+    color: #333;
+    margin: 1em 0 0.5em 0;
+
+  }
+  
+  .question-box p {
+    font-size: 24px;
+    color: #555;
+  }
+  
+  .question-box ol {
+    padding-left: 20px;
+  }
+  
+  .question-box li {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  

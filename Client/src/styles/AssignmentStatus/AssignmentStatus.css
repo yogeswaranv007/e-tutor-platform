@@ -1,0 +1,12 @@
+.assignment-status-container {
+    padding: 20px;
+    margin: 120px 40px 40px 40px;
+  }
+  
+  .assignments-section, .sessions-section {
+    background-color: #F7F2ED;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 60px;
+  }
+  
