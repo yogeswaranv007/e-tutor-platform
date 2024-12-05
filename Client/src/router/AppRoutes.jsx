@@ -5,7 +5,7 @@ import HomePage from "../Pages/HomePage";
 import FindTutors from "../Pages/FindTutors";
 import SubscriptionPlans from "../components/homepage/SubscriptionPlans";
 import PaymentPage from "../Pages/SubscribePage";
-import StudentDashboard from "../pages/";
+import StudentDashboard from "../pages/StudentDashboard.jsx";
 import TutorDashboard from "../pages/TutorDashboard.jsx";
 import AssignmentStatus from "../pages/AssignmentStatus.jsx";
 import AssignmentPendingPage from "../pages/AssignmentPending.jsx";
