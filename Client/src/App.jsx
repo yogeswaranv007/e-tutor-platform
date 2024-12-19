@@ -36,7 +36,7 @@ function App() {
     <Router>
       <AuthProvider>
           <Navbar />
-          <main className="main-content">
+          <main>
             <AppRoutes />
           </main>
       </AuthProvider>

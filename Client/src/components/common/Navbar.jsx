@@ -38,7 +38,6 @@ const Navbar = () => {
     if (!user) {
       return (
         <>
-          <NavLink to="/dashboard" activeClassName="active-link">Dashboard</NavLink>
           <NavLink to="/find-tutors" activeClassName="active-link">Find Tutors</NavLink>
           <NavLink to="/chats" activeClassName="active-link">Chats</NavLink>
           <NavLink to="/about" activeClassName="active-link">About</NavLink>
@@ -49,7 +48,7 @@ const Navbar = () => {
     if (user?.userType === 'Student') {
       return (
         <>
-          <NavLink to="/dashboard" activeClassName="active-link">Dashboard</NavLink>
+          <NavLink to="/student-dashboard" activeClassName="active-link">Dashboard</NavLink>
           <NavLink to="/find-tutors" activeClassName="active-link">Find Tutors</NavLink>
           <NavLink to="/chats" activeClassName="active-link">Chats</NavLink>
           <NavLink to="/about" activeClassName="active-link">About</NavLink>
@@ -60,16 +59,15 @@ const Navbar = () => {
     if (user?.userType === 'Tutor') {
       return (
         <>
-          <NavLink to="/dashboard" activeClassName="active-link">Dashboard</NavLink>
+          <NavLink to="/tutor-dashboard" activeClassName="active-link">Dashboard</NavLink>
           <NavLink to="/chats" activeClassName="active-link">Chats</NavLink>
           <NavLink to="/about" activeClassName="active-link">About</NavLink>
         </>
       );
-    }
+    } 
 
     return (
       <>
-        <NavLink to="/dashboard" activeClassName="active-link">Dashboard</NavLink>
         <NavLink to="/find-tutors" activeClassName="active-link">Find Tutors</NavLink>
         <NavLink to="/chats" activeClassName="active-link">Chats</NavLink>
         <NavLink to="/about" activeClassName="active-link">About</NavLink>

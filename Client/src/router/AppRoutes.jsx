@@ -15,6 +15,8 @@ import Profile from '../pages/profile.jsx';
 import TutorProfile from '../pages/TutorProfile.jsx';
 import ProtectedRoute from "./ProtectedRuoute.jsx";
 import { useAuth } from "../context/AuthContext.jsx"
+import About from '../pages/AboutPage.jsx'
+import Chatbox from "../components/Chatbox/chatbox.jsx";
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -33,6 +35,8 @@ function AppRoutes() {
       <Route path="/subscription" element={<SubscriptionPlans />} />
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/set-availability" element={<Availability />} />
+      <Route path="/about" element={<About/>} />
+      <Route path="/chats" element={<Chatbox/>} />
     </Routes>
   );
 }
