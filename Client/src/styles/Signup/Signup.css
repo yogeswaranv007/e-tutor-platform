@@ -1,8 +1,4 @@
-* {
-  font-family: 'Outfit', sans-serif;
-}
-
-.logsign-container {
+.signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +25,7 @@
   margin-bottom: 20px;
 }
 
-.logsign-form {
+.signup-form {
   position: relative;
   padding: 40px;
   border-radius: 8px;
@@ -39,19 +35,20 @@
   overflow: hidden;
 }
 
-.input-bg{
+.signup-input-bg{
   background-image: url('../../assets/SignInBackground.png');
   width: 100%;
   height: 100%;
   margin: 1em 0;
+  color: black;
 }
 
-.input-container {
+.signup-input-container {
   position: relative;
   margin-bottom: 10px;
 }
 
-.input-icon {
+.signup-input-icon {
   position: absolute;
   left: 10px;
   top: 50%;
@@ -60,7 +57,7 @@
   height: 20px;
 }
 
-.logsign-input {
+.signup-input {
   width: 100%;
   padding: 10px;
   padding-left: 40px; /* Adds space for the icon */
@@ -68,7 +65,7 @@
   border-radius: 10px;
 }
 
-.logsign-button {
+.signup-button {
   width: 100%;
   padding: 10px;
   background-color: #FE6635;
@@ -79,19 +76,19 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-.category-radio {
+.signup-category-radio {
   margin: 15px 0;
   display: flex;
   align-items: center;
 }
 
-.category-radio label {
+.signup-category-radio label {
   font-size: 16px;
   color: #333;
   margin-right: 5px;
 }
 
-.category-radio input[type="radio"] {
+.signup-category-radio input[type="radio"] {
   margin-right: 20px;
 }
 
@@ -100,11 +97,11 @@
   margin: 10px 0;
 }
 
-.logsign-button:hover {
+.signup-button:hover {
   opacity: 90%;
 }
 
-.logsign-google-button {
+.signup-google-button {
   width: 100%;
   padding: 10px;
   color: black;
@@ -124,7 +121,7 @@
   margin-right: 10px;
 }
 
-.logsign-google-button:hover {
+.signup-google-button:hover {
   opacity: 90%;
 }
 

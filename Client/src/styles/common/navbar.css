@@ -1,74 +1,116 @@
-*{
-    font-family: 'Outfit',sans-serif;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 40px;
+  background-color: #172138; 
+  color: #fff;
+  position: fixed; 
+  left: 0;
+  right: 0;
+  width: 100%; 
+  box-sizing: border-box;
+  margin-bottom: 100px;
 }
 
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 40px;
-    background-color: #172138; 
-    color: #fff;
-    position: fixed; 
-    left: 0;
-    right: 0;
-    width: 100%; 
-    box-sizing: border-box;
-  }
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+
+}
+
+.navbar-links {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-start;
+  margin-left: 50px;
+}
+
+.navbar-links a {
+  color: #ffffff;
+  margin: 0 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.navbar-links a:hover {
+  color: #f27f2d; /* Orange hover effect */
+}
+
+.navbar-buttons .btn-signup,
+.navbar-buttons .btn-login {
+  background-color: #F7F2ED;
+  color: #f27f2d;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.navbar-buttons .btn-login {
+  background-color: #f27f2d; /* Orange button */
+  color: white;
+}
+
+.navbar-buttons .btn-login:hover,
+.navbar-buttons .btn-signup:hover {
+  opacity: 80%;
+  transition: 0.3s ease;
+}
+
+.navbar-buttons .user-info {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin-left: 10px;
   
-  .navbar-logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-logo img {
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  .navbar-title {
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .navbar-links {
-    display: flex;
-    flex-grow: 1;
-    justify-content: flex-start;
-    margin-left: 50px;
-  }
-  
-  .navbar-links a {
-    color: #ffffff;
-    margin: 0 20px;
-    text-decoration: none;
-    font-size: 16px;
-  }
-  
-  .navbar-links a:hover {
-    color: #f27f2d; /* Orange hover effect */
-  }
-  
-  .navbar-buttons .btn-signup,
-  .navbar-buttons .btn-login {
-    background-color: #F7F2ED;
-    ;
-    color: #f27f2d;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-left: 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .navbar-buttons .btn-login {
-    background-color: #f27f2d; /* Orange button */
-    color: white;
-  }
-  
-  .navbar-buttons .btn-login:hover,
-  .navbar-buttons .btn-signup:hover {
-    opacity: 80%;
-    transition: 0.3s ease;
-  }
+}
+
+.navbar-buttons .user-info span{
+  margin-right: 20px;
+  font-size: 16px;
+}
+
+.navbar-buttons .user-info .username {
+  color: #f27f2d;
+  margin-right: 15px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.navbar-buttons .user-info .profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.navbar-buttons .user-info .btn-logout {
+  background-color: #F7F2ED;
+  color: #f27f2d;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  border: none;
+}
+
+.navbar-buttons .user-info .btn-logout:hover {
+  opacity: 80%;
+}

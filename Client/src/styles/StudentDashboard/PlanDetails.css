@@ -1,4 +1,4 @@
-.plan-details {
+.plan-details1 {
   background-color: #F7F2ED;
   border-radius: 10px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
@@ -11,16 +11,15 @@
   height: 100%;
 }
 
-.plan-details h3 {
+.plan-details1 h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   text-align: center;
 }
 
-.plan-details ul {
+.plan-details1 ul {
   list-style: none;
   padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   padding: 2rem; 
@@ -32,7 +31,7 @@
   max-width: 400px; 
 }
 
-.plan-details li {
+.plan-details1 li {
   font-size: 1rem;
   margin-bottom: 0.5rem;
   display: flex;
@@ -46,6 +45,6 @@
   font-size: 1rem;
 }
 
-.plan-details strong {
+.plan-details1 strong {
   margin-right: 10px;
 }

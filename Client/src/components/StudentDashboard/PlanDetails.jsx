@@ -3,7 +3,7 @@ import "../../styles/StudentDashboard/PlanDetails.css";
 
 const PlanDetails = () => {
   return (
-    <div className="plan-details">
+    <div className="plan-details1">
       <h3>Plan Details</h3>
       <ul>
         <li><strong>Plan:</strong> Standard</li>

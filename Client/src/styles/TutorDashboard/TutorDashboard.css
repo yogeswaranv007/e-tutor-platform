@@ -1,12 +1,9 @@
-* {
-  font-family: 'Outfit', sans-serif;
-}
-
 .tutor-dashboard {
   display: flex;
   justify-content: space-between;
-  margin: 20px;
-  padding-top: 80px;
+  padding-top: 90px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .left-section {

@@ -1,99 +1,147 @@
-*{
-    font-family: 'Outfit',sans-serif;
-  }
-  
-  .logsign-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    background-size: cover;
-    background-position: center;
-    margin-top: 50px;
-  }
-  .tutor_logo span{
-    font-size: 32px;
-    font-weight: 700px;
-    color: black;
-  }
-  .tutor_logo img
-  {
-    height: 35px;
-    margin-right: 10px;
-  }
-  .tutor_logo{
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    margin-bottom: 20px;
-  }
-  
-  .logsign-form {
-    position: relative; /* Make sure the pseudo-element aligns within the form */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    width: 350px; /* Adjust as needed */
-    background-color: white; /* Add a base background color */
-    overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
-  }
-  
-  .logsign-input {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    color: #FE6635;
-  }
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
 
-  .logsign-input label{
-    color: black;
-  }
-  
-  .logsign-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #F7F2ED;
-    color: black;
-    border: none;
-    border-radius: 100px;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-  }
-  
-  .category-radio
-  {
-    margin: 10px 0;
-    display: flex;
-  }
-  
-  .logsign-button:hover {
-    opacity: 90%;
-  }
-  
-  .logsign-google-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #FE6635;
-    color: white;
-    border: none;
-    border-radius: 100px;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-  }
-  
-  .logsign-google-button:hover {
-    opacity: 90%;
-  }
+.tutor_logo span {
+  font-size: 32px;
+  font-weight: 700;
+  color: black;
+}
 
+.tutor_logo img {
+  height: 35px;
+  margin-right: 10px;
+}
 
-  /* LoginPage.css */
+.tutor_logo {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 20px;
+}
 
-/* General styles for all labels */
-.logsign-form label {
-  color: #333; /* Change this color to your preferred default color */
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
+.login-form {
+  position: relative;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.login-input-bg {
+  background-image: url('../assets/SignInBackground.png');
+  width: 100%;
+  height: 100%;
+  margin: 1em 0;
+  color: black;
+}
+
+.login-input-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.login-input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px;
+  padding-left: 40px; /* Adds space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #FE6635;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.login-button:hover {
+  opacity: 90%;
+}
+
+.or {
+  text-align: center;
+  margin: 10px 0;
+  color: black;
+}
+
+.login-google-button {
+  width: 100%;
+  padding: 10px;
+  color: black;
+  background-color: #F7F2ED;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.login-google-button:hover {
+  opacity: 90%;
+}
+
+.forgot-password {
+  text-align: right;
+  margin: 10px 0;
+}
+
+.forgot-password a {
+  color: #FE6635;
+  text-decoration: none;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 15px;
+  color: black;
+}
+
+.signup-link a {
+  color: #FE6635;
+  text-decoration: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.login-category-radio{
+  display: flex;
+  gap: 20px;
+}
+
+.login-category-radio label{
+  margin-right: 10px;
 }

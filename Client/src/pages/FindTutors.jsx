@@ -22,7 +22,7 @@ function FindTutors() {
         <SearchBar />
         <h2>These <span className="highlight">Tutors</span> Fit your Choice</h2>
       </div>
-      <div className="main-content">
+      <div className="main-content1">
         <div className="filters">
           <h2>Filters</h2>
           <h3>Availability</h3>

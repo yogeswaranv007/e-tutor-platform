@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../../styles/StudentDashboard/ScheduledLessons.css";
 import Tutor1 from "../../assets/Tutor1.png";
 import Tutor2 from "../../assets/Tutor2.png";
 import ThreeDot from '../../assets/ThreeDot.png';
 
 const ScheduledLessons = () => {
+  const navigate = useNavigate();
+
+  const startSession = (roomName) => {
+    // Navigate to session page with room name
+    navigate('/session', { 
+      state: { 
+        roomName: roomName,
+        user: {
+          name: "Student Name",
+          email: "student@example.com"
+        } 
+      } 
+    });
+  };
+
   return (
     <div className="scheduled-lessons">
       <h3>Scheduled Lessons</h3>
@@ -18,7 +34,9 @@ const ScheduledLessons = () => {
             <p><strong>Date:</strong> 11 October 2024</p>
             <p><strong>Time:</strong> 10 am - 11 am</p>
             <p><strong>Lesson:</strong> Algebra</p>
-            <button>Start Session</button>
+            <button onClick={() => startSession('algebra-session-11oct')}>
+              Start Session
+            </button>
           </div>
         </div>
         <div className="lesson-box">
@@ -30,7 +48,9 @@ const ScheduledLessons = () => {
             <p><strong>Date:</strong> 11 October 2024</p>
             <p><strong>Time:</strong> 1 pm - 2 pm</p>
             <p><strong>Lesson:</strong> Geometry</p>
-            <button>Start Session</button>
+            <button onClick={() => startSession('geometry-session-11oct')}>
+              Start Session
+            </button>
           </div>
         </div>
       </div>

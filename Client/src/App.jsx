@@ -1,16 +1,45 @@
-// App.jsx
+
+// import React from "react";
+// import { BrowserRouter as Router } from "react-router-dom";
+// import Navbar from "./components/common/Navbar";
+// import AppRoutes from "./router/AppRoutes";
+// import { AuthProvider } from "./context/AuthContext";
+
+// function App() {
+//   return (
+//     <Router>
+//       <AuthProvider>
+//       <Navbar />
+//       <div className="main-content">
+//         <AppRoutes />
+//       </div>
+//       </AuthProvider>
+//     </Router>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
 import AppRoutes from "./router/AppRoutes";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <Router>
-      <Navbar />
-      <div className="main-content">
-        <AppRoutes />
-      </div>
+      <AuthProvider>
+          <Navbar />
+          <main className="main-content">
+            <AppRoutes />
+          </main>
+      </AuthProvider>
     </Router>
   );
 }
