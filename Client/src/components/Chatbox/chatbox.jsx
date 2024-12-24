@@ -36,7 +36,7 @@ const Chatbox = () => {
         <h2>Chats</h2>
         <input
           type="text"
-          className="search-bar"
+          className="search-bar-chat"
           placeholder="Search Your Tutors here..."
         />
         <div className="contacts-list">

@@ -1,3 +1,41 @@
+// import React, { createContext, useContext, useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// const AuthContext = createContext();
+
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState(null);
+
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem('user');
+//     if (storedUser) {
+//       setUser(JSON.parse(storedUser));
+//     }
+//   }, []);
+
+//   const login = async (userData) => {
+//     setUser(userData);
+//     localStorage.setItem('user', JSON.stringify(userData));
+//   };
+
+//   const logout = () => {
+//     setUser(null);
+//     localStorage.removeItem('user');
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export const useAuth = () => useContext(AuthContext);
+
+
+
+
+// AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -13,8 +51,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    // Keep the original _id from MongoDB
+    const formattedUser = {
+      _id: userData._id,
+      email: userData.email,
+      username: userData.username,
+      userType: userData.userType
+    };
+    setUser(formattedUser);
+    localStorage.setItem('user', JSON.stringify(formattedUser));
   };
 
   const logout = () => {
@@ -22,41 +67,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const updateProfilePicture = (newProfilePicture) => {
-    if (user) {
-      const updatedUser = { ...user, profilePicture: newProfilePicture };
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    }
-  };
-
-  const removeProfilePicture = () => {
-    if (user) {
-      const updatedUser = { ...user };
-      delete updatedUser.profilePicture;
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-    }
-  };
-
-
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      login, 
-      logout, 
-      updateProfilePicture,
-      removeProfilePicture,
-      useUserType
-    }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useUserType = () => {
-  const { user } = useAuth();
-  return user?.userType || null; 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
 
-export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

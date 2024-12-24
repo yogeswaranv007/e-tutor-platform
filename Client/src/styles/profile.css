@@ -6,7 +6,7 @@
     height:100vh;
     background-color: #f8f4f1;
     font-family: 'outfit', sans-serif;
-    margin-top: 35px;
+    
   }
   
   /* Main profile card */
@@ -18,6 +18,7 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     margin-left: 100px;
+    margin-top: 80px;
   }
   
   /* Profile header (contains image and name) */
@@ -268,4 +269,25 @@
   background-color: #f8f4f1;
   font-family: 'outfit', sans-serif;
   padding-bottom: 50px;
+}
+
+
+.profile-name-container .profile-username{
+  color: #fff;
+  font-size:30px;
+}
+
+
+.add-skill-button {
+  background-color: #FE6635;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.add-skill-button:hover {
+  background-color: #e2552d;
 }

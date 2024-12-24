@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './../styles/profile.css';
-import Tutor2 from './../assets/Tutor2.png';
-import { useAuth } from './../context/AuthContext';
+import ProfileIcon from './../assets/ProfileIcon.png';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function TutorProfile() {
-  const { user, updateProfilePicture, removeProfilePicture } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
-
   const [profile, setProfile] = useState({
     name: '',
     gender: '',
@@ -19,145 +19,209 @@ function TutorProfile() {
     profession: '',
     experience: '',
     expertiseIn: '',
+    TutoringTopics: '',
     hourlyRate: '',
     skills: [],
   });
-
   const [editField, setEditField] = useState(null);
   const [editValue, setEditValue] = useState('');
-  const [image, setImage] = useState(user?.profilePicture || Tutor2);
-  const [loading, setLoading] = useState(true);
+  const [newSkill, setNewSkill] = useState('');
+  const [profileImage, setProfileImage] = useState(ProfileIcon);
 
-  // Fetch profile data when component mounts
+  const orderedFields = [
+    'name',
+    'gender',
+    'location',
+    'birthday',
+    'bio',
+    'linkedin',
+    'education',
+    'profession',
+    'experience',
+    'expertiseIn',
+    'TutoringTopics',
+    'hourlyRate',
+    'skills'
+  ];
+
   useEffect(() => {
     if (!user) {
       navigate('/');
       return;
     }
-
-    fetchProfile();
+    fetchProfileData();
+    fetchProfileImage();
   }, [user, navigate]);
 
-  const fetchProfile = async () => {
+  const fetchProfileImage = async () => {
     try {
-      const response = await fetch('/api/profile', {
-        headers: {
-          'Authorization': `Bearer ${user.token}`,
-        },
+      if (!user) return;
+
+      const response = await axios.get(`/api/profile/image/${user._id}`, {
+        params: { userType: user.userType },
+        responseType: 'arraybuffer'
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setProfile(data);
-        if (data.profilePicture) {
-          setImage(data.profilePicture);
-          updateProfilePicture(data.profilePicture);
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const imageUrl = URL.createObjectURL(blob);
+      setProfileImage(imageUrl);
+    } catch (error) {
+      console.error('Failed to fetch profile image:', error);
+      setProfileImage(ProfileIcon);
+    }
+  };
+
+  const fetchProfileData = async () => {
+    try {
+      if (!user) return;
+
+      const response = await axios.get('/api/profile', {
+        params: {
+          userId: user._id,
+          userType: user.userType
         }
+      });
+
+      if (response.data.success) {
+        const filteredProfile = Object.fromEntries(
+          Object.entries(response.data.profile)
+            .filter(([key]) => orderedFields.includes(key))
+        );
+        setProfile(filteredProfile);
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
-    } finally {
-      setLoading(false);
+      console.error('Failed to fetch profile data:', error);
     }
   };
 
   const handleEdit = (field, value) => {
     setEditField(field);
-    if (Array.isArray(value)) {
-      setEditValue(value.join(', '));
-    } else {
-      setEditValue(value || '');
+    setEditValue(Array.isArray(value) ? value.join(', ') : value);
+  };
+
+  const renderInputField = (field, value) => {
+    switch (field) {
+      case 'birthday':
+        return (
+          <input
+            type="date"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+          />
+        );
+      case 'bio':
+        return (
+          <textarea
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+            rows="3"
+          />
+        );
+      case 'hourlyRate':
+        return (
+          <input
+            type="number"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+          />
+        );
+      case 'skills':
+        return (
+          <input
+            type="text"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+            placeholder="Separate skills with commas"
+          />
+        );
+      default:
+        return (
+          <input
+            type="text"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+          />
+        );
     }
   };
 
   const saveEdit = async () => {
     try {
-      const updatedValue = editField === 'skills'
-        ? editValue.split(',').map(v => v.trim()).filter(v => v)
-        : editValue;
+      if (!user) {
+        console.error('User not authenticated');
+        return;
+      }
 
-      const response = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ [editField]: updatedValue }),
-      });
+      const updatedProfile = {
+        ...profile,
+        [editField]: editField === 'skills' ? editValue.split(',').map(v => v.trim()) : editValue,
+        userId: user._id,
+        userType: user.userType
+      };
 
-      if (response.ok) {
-        const data = await response.json();
-        setProfile(data);
-        setEditField(null);
+      const response = await axios.put('/api/profile', updatedProfile);
+      if (response.data.success) {
+        setProfile(response.data.profile);
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error('Failed to save profile:', error);
     }
+    setEditField(null);
   };
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 5000000) { // 5MB limit
-        alert('Image size should be less than 5MB');
-        return;
+      try {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('userId', user._id);
+        formData.append('userType', user.userType);
+
+        await axios.post('/api/profile/image', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+
+        fetchProfileImage();
+      } catch (error) {
+        console.error('Failed to upload image:', error);
       }
+    }
+  };
 
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const base64Image = event.target.result;
-        try {
-          const response = await fetch('/api/profile/picture', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.token}`,
-            },
-            body: JSON.stringify({ profilePicture: base64Image }),
-          });
+  const handleSkillAdd = async () => {
+    if (newSkill.trim()) {
+      try {
+        const updatedSkills = [...profile.skills, newSkill.trim()];
+        
+        const response = await axios.put('/api/profile', {
+          ...profile,
+          skills: updatedSkills,
+          userId: user._id,
+          userType: user.userType
+        });
 
-          if (response.ok) {
-            setImage(base64Image);
-            updateProfilePicture(base64Image);
-          }
-        } catch (error) {
-          console.error('Error updating profile picture:', error);
+        if (response.data.success) {
+          setProfile(response.data.profile);
+          setNewSkill('');
         }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemoveProfilePicture = async () => {
-    try {
-      const response = await fetch('/api/profile/picture', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ profilePicture: null }),
-      });
-
-      if (response.ok) {
-        setImage(Tutor2);
-        removeProfilePicture();
+      } catch (error) {
+        console.error('Error adding skill:', error);
       }
-    } catch (error) {
-      console.error('Error removing profile picture:', error);
     }
   };
-
-  if (!user) return null;
-  if (loading) return <div className="loading">Loading...</div>;
 
   return (
     <div className="tutor-profile-page">
       <div className="tutor-profile-card">
-        {/* Profile Header */}
         <div className="profile-header">
           <div className="image-container">
-            <img src={image} alt="Profile" className="profile-image" />
+            <img src={profileImage} alt="Profile" className="profile-image" />
             <label htmlFor="file-upload" className="edit-image-icon">
               &#9998;
             </label>
@@ -168,92 +232,60 @@ function TutorProfile() {
               onChange={handleImageChange}
               className="file-input"
             />
-            {image !== Tutor2 && (
-              <button
-                className="remove-image-icon"
-                onClick={handleRemoveProfilePicture}
-                title="Remove Profile Picture"
-              >
-                ✖
-              </button>
-            )}
           </div>
-          <div className="profile-info">
-            <p className="profile-username">{user.username}</p>
-            <p className="profile-name">
-              {editField === 'name' ? (
-                <input
-                  type="text"
-                  placeholder="Enter your name"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                  className="inline-input"
-                />
-              ) : (
-                profile.name || 'Enter your name'
-              )}
-              <span className="edit-icon" onClick={() => handleEdit('name', profile.name)}>
-                &#9998;
-              </span>
-              {editField === 'name' && (
-                <span className="save-icon" onClick={saveEdit}>
-                  ✔
-                </span>
-              )}
-            </p>
+          <div className="profile-name-container">
+            <p className="profile-username">{user?.username || 'Unknown Tutor'}</p>
           </div>
         </div>
 
-        {/* Profile Details */}
         <div className="details-container">
           <div className="profile-details">
-            {Object.entries(profile).map(([field, value]) => {
-              // Skip fields that shouldn't be displayed
-              if (['_id', '__v', 'userId', 'userType', 'name', 'profilePicture', 'createdAt', 'updatedAt'].includes(field)) {
-                return null;
-              }
-
-              return (
-                <div key={field} className="profile-row">
-                  <span className="profile-label">{field.charAt(0).toUpperCase() + field.slice(1)}</span>
-                  {editField === field ? (
-                    field === 'birthday' ? (
-                      <input
-                        type="date"
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        className="inline-input"
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        placeholder={`Enter your ${field}`}
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        className="inline-input"
-                      />
-                    )
-                  ) : (
+            {orderedFields.map(field => (
+              <div key={field} className="profile-row">
+                <span className="profile-label">
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </span>
+                {editField === field ? (
+                  <>
+                    {renderInputField(field, profile[field])}
+                    <span className="save-icon" onClick={saveEdit}>✔</span>
+                  </>
+                ) : (
+                  <>
                     <span className="profile-value">
-                      {Array.isArray(value)
-                        ? value.length
-                          ? value.map((v, i) => <span key={i} className="skill-tag">{v}</span>)
-                          : `Enter your ${field}`
-                        : value || `Enter your ${field}`}
+                      {field === 'skills' ? (
+                        <div className="skills-container">
+                          {Array.isArray(profile[field]) && profile[field].length > 0 ? (
+                            profile[field].map((skill, index) => (
+                              <span key={index} className="skill-tag">{skill}</span>
+                            ))
+                          ) : (
+                            'Enter your skills'
+                          )}
+                          <input
+                            type="text"
+                            value={newSkill}
+                            onChange={(e) => setNewSkill(e.target.value)}
+                            placeholder="Add skill"
+                            className="inline-input"
+                          />
+                          <button className="add-skill-button" onClick={handleSkillAdd}>
+                            Add Skill
+                          </button>
+                        </div>
+                      ) : field === 'hourlyRate' ? (
+                        profile[field] ? `$${profile[field]}/hr` : 'Enter your hourly rate'
+                      ) : field === 'birthday' ? (
+                        profile[field] ? new Date(profile[field]).toLocaleDateString() : 'Enter your birthday'
+                      ) : profile[field] || `Enter your ${field}`}
                     </span>
-                  )}
-                  {editField === field ? (
-                    <span className="save-icon" onClick={saveEdit}>
-                      ✔
-                    </span>
-                  ) : (
-                    <span className="edit-link" onClick={() => handleEdit(field, value)}>
+                    <span className="edit-link" onClick={() => handleEdit(field, profile[field] || '')}>
                       Edit
                     </span>
-                  )}
-                </div>
-              );
-            })}
+                  </>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -262,3 +294,209 @@ function TutorProfile() {
 }
 
 export default TutorProfile;
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import './../styles/profile.css';
+// import Tutor2 from './../assets/Tutor2.png';
+// import axios from 'axios';
+// import { useAuth } from '../context/AuthContext';
+
+// function TutorProfile() {
+//   const { user } = useAuth();
+//   const [profile, setProfile] = useState({
+//     name: '',
+//     gender: '',
+//     location: '',
+//     birthday: '',
+//     bio: '',
+//     linkedin: '',
+//     education: '',
+//     profession: '',
+//     experience: '',
+//     expertiseIn: '',
+//     hourlyRate: '',
+//     skills: [],
+//   });
+//   const [editField, setEditField] = useState(null);
+//   const [editValue, setEditValue] = useState('');
+//   const [image, setImage] = useState(Tutor2);
+//   const [newSkill, setNewSkill] = useState('');
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchProfileData = async () => {
+//       try {
+//         const token = localStorage.getItem('token');
+//         if (!user?.id || !token) {
+//           console.error('User ID or token not found');
+//           return;
+//         }
+
+//         const response = await axios.get('/api/tutor/profile', {
+//           headers: {
+//             'Authorization': `Bearer ${token}`
+//           }
+//         });
+
+//         if (response.data.profile) {
+//           setProfile(response.data.profile);
+//         }
+//       } catch (error) {
+//         console.error('Failed to fetch profile data:', error);
+//         setError('Failed to load profile data');
+//       }
+//     };
+
+//     if (user) {
+//       fetchProfileData();
+//     }
+//   }, [user]);
+
+//   const handleEdit = (field, value) => {
+//     setEditField(field);
+//     setEditValue(Array.isArray(value) ? value.join(', ') : value);
+//     setError(null);
+//   };
+
+//   const saveEdit = async () => {
+//     try {
+//       const token = localStorage.getItem('token');
+//       if (!token) {
+//         setError('Authentication token not found');
+//         return;
+//       }
+
+//       const value = editField === 'skills' ? 
+//         editValue.split(',').map(v => v.trim()) : 
+//         editValue;
+
+//       const response = await axios.put(
+//         '/api/tutor/profile',
+//         { [editField]: value },
+//         {
+//           headers: {
+//             'Authorization': `Bearer ${token}`
+//           }
+//         }
+//       );
+
+//       if (response.data.profile) {
+//         setProfile(response.data.profile);
+//         setEditField(null);
+//         setError(null);
+//       }
+//     } catch (error) {
+//       console.error('Error saving profile changes:', error);
+//       setError('Failed to save changes');
+//     }
+//   };
+
+//   const handleImageChange = async (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       try {
+//         const reader = new FileReader();
+//         reader.onload = async (event) => {
+//           setImage(event.target.result);
+//           // Upload image to the server, update profile
+//         };
+//         reader.readAsDataURL(file);
+//       } catch (error) {
+//         console.error('Error handling image:', error);
+//         setError('Failed to update profile image');
+//       }
+//     }
+//   };
+
+//   const handleSkillAdd = async () => {
+//     if (newSkill.trim()) {
+//       try {
+//         const token = localStorage.getItem('token');
+//         if (!token) {
+//           setError('Authentication token not found');
+//           return;
+//         }
+
+//         const updatedSkills = [...profile.skills, newSkill.trim()];
+        
+//         const response = await axios.put(
+//           '/api/tutor/profile',
+//           { skills: updatedSkills },
+//           {
+//             headers: {
+//               'Authorization': `Bearer ${token}`
+//             }
+//           }
+//         );
+
+//         if (response.data.profile) {
+//           setProfile(response.data.profile);
+//           setNewSkill('');
+//           setError(null);
+//         }
+//       } catch (error) {
+//         console.error('Error adding skill:', error);
+//         setError('Failed to add skill');
+//       }
+//     }
+//   };
+
+//   return (
+//     <div className="profile-page">
+//       <div className="profile-card">
+//         <div className="profile-header">
+//           <div className="image-container">
+//             <img src={image} alt="Profile" className="profile-image" />
+//             <label htmlFor="file-upload" className="edit-image-icon">&#9998;</label>
+//             <input id="file-upload" type="file" accept="image/*" onChange={handleImageChange} className="file-input" />
+//           </div>
+//           <div className="profile-name-container">
+//             <p className="profile-username">{user?.username || 'Unknown User'}</p>
+//           </div>
+//         </div>
+
+//         <div className="details-container">
+//           <div className="profile-details">
+//             {Object.entries(profile).map(([field, value]) => (
+//               <div key={field} className="profile-row">
+//                 <span className="profile-label">{field.charAt(0).toUpperCase() + field.slice(1)}</span>
+//                 {editField === field ? (
+//                   field === 'birthday' ? (
+//                     <input type="date" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="inline-input" />
+//                   ) : (
+//                     <input type="text" placeholder={`Enter your ${field}`} value={editValue} onChange={(e) => setEditValue(e.target.value)} className="inline-input" />
+//                   )
+//                 ) : (
+//                   <span className="profile-value">
+//                     {field === 'skills' ? (
+//                       <div className="skills-container">
+//                         {value.length > 0 ? value.map((skill, index) => (
+//                           <span key={index} className="skill-tag">{skill}</span>
+//                         )) : 'Enter your skills'}
+//                         <input type="text" value={newSkill} onChange={(e) => setNewSkill(e.target.value)} placeholder="Add skill" className="inline-input" />
+//                         <button className="add-skill-button" onClick={handleSkillAdd}>Add Skill</button>
+//                       </div>
+//                     ) : Array.isArray(value) ? (
+//                       value.length ? value.map((v, i) => (
+//                         <span key={i} className="skill-tag">{v}</span>
+//                       )) : `Enter your ${field}`
+//                     ) : value || `Enter your ${field}`}
+//                   </span>
+//                 )}
+//                 {editField === field ? (
+//                   <span className="save-icon" onClick={saveEdit}>✔</span>
+//                 ) : (
+//                   <span className="edit-link" onClick={() => handleEdit(field, value || '')}>Edit</span>
+//                 )}
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default TutorProfile;

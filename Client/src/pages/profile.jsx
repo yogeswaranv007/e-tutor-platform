@@ -1,22 +1,289 @@
+import React, { useState, useEffect } from 'react';
+import './../styles/profile.css';
+import ProfileIcon from './../assets/ProfileIcon.png';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
+function Profile() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState({
+    name: '',
+    gender: '',
+    location: '',
+    birthday: '',
+    bio: '',
+    linkedin: '',
+    education: '',
+    skills: [],
+  });
+
+  const orderedFields = [
+    'name',
+    'gender',
+    'location',
+    'birthday',
+    'bio',
+    'linkedin',
+    'education',
+    'skills'
+  ];
+
+  const [editField, setEditField] = useState(null);
+  const [editValue, setEditValue] = useState('');
+  const [newSkill, setNewSkill] = useState('');
+  const [profileImage, setProfileImage] = useState(ProfileIcon);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+      return;
+    }
+    fetchProfileData();
+    fetchProfileImage();
+  }, [user, navigate]);
+
+  const fetchProfileImage = async () => {
+    try {
+      if (!user) return;
+
+      const response = await axios.get(`/api/profile/image/${user._id}`, {
+        params: { userType: user.userType },
+        responseType: 'arraybuffer'
+      });
+
+      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      const imageUrl = URL.createObjectURL(blob);
+      setProfileImage(imageUrl);
+    } catch (error) {
+      console.error('Failed to fetch profile image:', error);
+      setProfileImage(ProfileIcon);
+    }
+  };
+
+  const fetchProfileData = async () => {
+    try {
+      if (!user) return;
+
+      const response = await axios.get('/api/profile', {
+        params: {
+          userId: user._id,
+          userType: user.userType
+        }
+      });
+
+      if (response.data.success) {
+        setProfile(response.data.profile);
+      }
+    } catch (error) {
+      console.error('Failed to fetch profile data:', error);
+    }
+  };
+
+  const handleEdit = (field, value) => {
+    setEditField(field);
+    setEditValue(Array.isArray(value) ? value.join(', ') : value);
+  };
+
+  const renderInputField = (field, value) => {
+    switch (field) {
+      case 'birthday':
+        return (
+          <input
+            type="date"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+          />
+        );
+      case 'bio':
+        return (
+          <textarea
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+            rows="3"
+          />
+        );
+      case 'skills':
+        return (
+          <input
+            type="text"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+            placeholder="Separate skills with commas"
+          />
+        );
+      default:
+        return (
+          <input
+            type="text"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+            className="edit-input"
+          />
+        );
+    }
+  };
+
+  const saveEdit = async () => {
+    try {
+      if (!user) {
+        console.error('User not authenticated');
+        return;
+      }
+
+      const updatedProfile = {
+        ...profile,
+        [editField]: editField === 'skills' ? editValue.split(',').map(v => v.trim()) : editValue,
+        userId: user._id,
+        userType: user.userType
+      };
+
+      const response = await axios.put('/api/profile', updatedProfile);
+      if (response.data.success) {
+        setProfile(response.data.profile);
+      }
+    } catch (error) {
+      console.error('Failed to save profile:', error);
+    }
+    setEditField(null);
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('userId', user._id);
+        formData.append('userType', user.userType);
+
+        await axios.post('/api/profile/image', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        
+        fetchProfileImage();
+      } catch (error) {
+        console.error('Failed to upload image:', error);
+      }
+    }
+  };
+
+  const handleSkillAdd = async () => {
+    if (newSkill.trim()) {
+      try {
+        const updatedSkills = [...profile.skills, newSkill.trim()];
+        
+        const response = await axios.put('/api/profile', {
+          ...profile,
+          skills: updatedSkills,
+          userId: user._id,
+          userType: user.userType
+        });
+
+        if (response.data.success) {
+          setProfile(response.data.profile);
+          setNewSkill('');
+        }
+      } catch (error) {
+        console.error('Error adding skill:', error);
+      }
+    }
+  };
+
+  return (
+    <div className="profile-page">
+      <div className="profile-card">
+        <div className="profile-header">
+          <div className="image-container">
+            <img src={profileImage} alt="Profile" className="profile-image" />
+            <label htmlFor="file-upload" className="edit-image-icon">
+              &#9998;
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="file-input"
+            />
+          </div>
+          <div className="profile-name-container">
+            <p className="profile-username">{user?.username || 'Unknown Student'}</p>
+          </div>
+        </div>
+
+        <div className="details-container">
+          <div className="profile-details">
+            {orderedFields.map(field => (
+              <div key={field} className="profile-row">
+                <span className="profile-label">
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </span>
+                {editField === field ? (
+                  <>
+                    {renderInputField(field, profile[field])}
+                    <span className="save-icon" onClick={saveEdit}>✔</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="profile-value">
+                      {field === 'skills' ? (
+                        <div className="skills-container">
+                          {Array.isArray(profile[field]) && profile[field].length > 0 ? (
+                            profile[field].map((skill, index) => (
+                              <span key={index} className="skill-tag">{skill}</span>
+                            ))
+                          ) : (
+                            'Enter your skills'
+                          )}
+                          <input
+                            type="text"
+                            value={newSkill}
+                            onChange={(e) => setNewSkill(e.target.value)}
+                            placeholder="Add skill"
+                            className="inline-input"
+                          />
+                          <button className="add-skill-button" onClick={handleSkillAdd}>
+                            Add Skill
+                          </button>
+                        </div>
+                      ) : field === 'birthday' ? (
+                        profile[field] ? profile[field].split('T')[0] : 'Enter your birthday'
+                      ) : (
+                        profile[field] || `Enter your ${field}`
+                      )}
+                    </span>
+                    <span className="edit-link" onClick={() => handleEdit(field, profile[field] || '')}>
+                      Edit
+                    </span>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Profile;
+
 // import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 // import './../styles/profile.css';
 // import Tutor2 from './../assets/Tutor2.png';
-// import { useAuth } from './../context/AuthContext';
+// import axios from 'axios';
+// import { useAuth } from '../context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
 
 // function Profile() {
-//   const { user, updateProfilePicture, removeProfilePicture } = useAuth();
-//   const navigate = useNavigate();
-
-//   // If no user is logged in, redirect to home or login
-//   useEffect(() => {
-//     if (!user) {
-//       navigate('/login');
-//     }
-//   }, [user, navigate]);
-
+//   const { user } = useAuth(); // Access user from context
 //   const [profile, setProfile] = useState({
-//     name: user?.name || '',
+//     name: '',
 //     gender: '',
 //     location: '',
 //     birthday: '',
@@ -25,61 +292,99 @@
 //     education: '',
 //     skills: [],
 //   });
-
 //   const [editField, setEditField] = useState(null);
 //   const [editValue, setEditValue] = useState('');
-//   const [image, setImage] = useState(user?.profilePicture || Tutor2);
+//   const [image, setImage] = useState(Tutor2);
+//   const [newSkill, setNewSkill] = useState('');
+//   const [error, setError] = useState(null);
+//   const navigate = useNavigate();
 
-//   // Handle Edit
-//   const handleEdit = (field, value) => {
-//     setEditField(field);
-//     if (Array.isArray(value)) {
-//       setEditValue(value.join(', ')); // Convert array to string for editing
-//     } else {
-//       setEditValue(value);
+//   useEffect(() => {
+//     const fetchProfileData = async () => {
+//       const token = localStorage.getItem('token'); // Get token from localStorage
+
+//       if (!user?.id || !token) {
+//         setError('User ID or token not found.');
+//         navigate('/'); // Redirect to login page if user/token is missing
+//         return;
+//       }
+
+//       try {
+//         // Determine the API endpoint based on the user type
+//         const endpoint = user.userType === 'student' ? '/api/student/profile' : '/api/tutor/profile';
+
+//         const response = await axios.get(endpoint, {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         });
+
+//         if (response.data.profile) {
+//           setProfile(response.data.profile);
+//         }
+//       } catch (error) {
+//         console.error('Failed to fetch profile data:', error);
+//         setError('Failed to load profile data. Please try again later.');
+//       }
+//     };
+
+//     if (user) {
+//       fetchProfileData();
 //     }
-//   };
+//   }, [user, navigate]);
 
-//   // Save Edit
-//   const saveEdit = () => {
-//     setProfile((prev) => ({
-//       ...prev,
-//       [editField]: editField === 'skills' ? editValue.split(',').map((v) => v.trim()) : editValue,
-//     }));
-//     setEditField(null);
-//   };
-
-//   // Handle Image Upload
 //   const handleImageChange = (e) => {
 //     const file = e.target.files[0];
 //     if (file) {
 //       const reader = new FileReader();
-//       reader.onload = (event) => {
-//         const base64Image = event.target.result;
-//         setImage(base64Image);
-        
-//         // Call method to update profile picture in AuthContext
-//         updateProfilePicture(base64Image);
+//       reader.onloadend = () => {
+//         setImage(reader.result); // Update the image state with the new image data
 //       };
 //       reader.readAsDataURL(file);
 //     }
 //   };
 
-//   // New method to handle profile picture removal
-//   const handleRemoveProfilePicture = () => {
-//     setImage(Tutor2);
-//     removeProfilePicture();
+//   const handleEdit = (field, value) => {
+//     setEditField(field);
+//     setEditValue(value);
 //   };
 
-//   // If no user is logged in, return null or a loading state
-//   if (!user) {
-//     return null;
-//   }
+//   const saveEdit = async () => {
+//     const token = localStorage.getItem('token');
+//     const updatedProfile = { ...profile, [editField]: editValue };
+
+//     try {
+//       // Determine the API endpoint based on the user type
+//       const endpoint = user.userType === 'student' ? '/api/student/profile' : '/api/tutor/profile';
+
+//       const response = await axios.put(endpoint, updatedProfile, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+
+//       setProfile(response.data.profile);
+//       setEditField(null);
+//     } catch (error) {
+//       console.error('Error updating profile:', error);
+//       setError('Failed to update profile. Please try again.');
+//     }
+//   };
+
+//   const handleSkillAdd = () => {
+//     if (newSkill && !profile.skills.includes(newSkill)) {
+//       setProfile((prevProfile) => ({
+//         ...prevProfile,
+//         skills: [...prevProfile.skills, newSkill],
+//       }));
+//       setNewSkill('');
+//     }
+//   };
 
 //   return (
 //     <div className="profile-page">
+//       {error && <div className="error-message">{error}</div>}
 //       <div className="profile-card">
-//         {/* Profile Header */}
 //         <div className="profile-header">
 //           <div className="image-container">
 //             <img src={image} alt="Profile" className="profile-image" />
@@ -93,50 +398,19 @@
 //               onChange={handleImageChange}
 //               className="file-input"
 //             />
-//             {/* Add remove button only if profile picture exists */}
-//             {user?.profilePicture && (
-//               <button 
-//                 className="remove-image-icon" 
-//                 onClick={handleRemoveProfilePicture}
-//                 title="Remove Profile Picture"
-//               >
-//                 ✖
-//               </button>
-//             )}
 //           </div>
-//           <div className="profile-info">
-//             <p className="profile-username">{user.username}</p>
-//             <p className="profile-name">
-//               {editField === 'name' ? (
-//                 <input
-//                   type="text"
-//                   placeholder="Enter your name"
-//                   value={editValue}
-//                   onChange={(e) => setEditValue(e.target.value)}
-//                   className="inline-input"
-//                 />
-//               ) : (
-//                 profile.name || 'Enter your name'
-//               )}
-//               <span className="edit-icon" onClick={() => handleEdit('name', profile.name || '')}>
-//                 &#9998;
-//               </span>
-//               {editField === 'name' && (
-//                 <span className="save-icon" onClick={saveEdit}>
-//                   ✔
-//                 </span>
-//               )}
-//             </p>
+//           <div className="profile-name-container">
+//             <p className="profile-username">{user?.username || 'Unknown User'}</p>
 //           </div>
 //         </div>
 
-//         {/* Rest of the component remains unchanged */}
-//         {/* Profile Details */}
 //         <div className="details-container">
 //           <div className="profile-details">
 //             {Object.entries(profile).map(([field, value]) => (
 //               <div key={field} className="profile-row">
-//                 <span className="profile-label">{field.charAt(0).toUpperCase() + field.slice(1)}</span>
+//                 <span className="profile-label">
+//                   {field.charAt(0).toUpperCase() + field.slice(1)}
+//                 </span>
 //                 {editField === field ? (
 //                   field === 'birthday' ? (
 //                     <input
@@ -156,11 +430,40 @@
 //                   )
 //                 ) : (
 //                   <span className="profile-value">
-//                     {Array.isArray(value)
-//                       ? value.length
-//                         ? value.map((v, i) => <span key={i} className="skill-tag">{v}</span>)
+//                     {field === 'skills' ? (
+//                       <div className="skills-container">
+//                         {value.length > 0
+//                           ? value.map((skill, index) => (
+//                               <span key={index} className="skill-tag">
+//                                 {skill}
+//                               </span>
+//                             ))
+//                           : 'Enter your skills'}
+//                         <input
+//                           type="text"
+//                           value={newSkill}
+//                           onChange={(e) => setNewSkill(e.target.value)}
+//                           placeholder="Add skill"
+//                           className="inline-input"
+//                         />
+//                         <button
+//                           className="add-skill-button"
+//                           onClick={handleSkillAdd}
+//                         >
+//                           Add Skill
+//                         </button>
+//                       </div>
+//                     ) : Array.isArray(value) ? (
+//                       value.length
+//                         ? value.map((v, i) => (
+//                             <span key={i} className="skill-tag">
+//                               {v}
+//                             </span>
+//                           ))
 //                         : `Enter your ${field}`
-//                       : value || `Enter your ${field}`}
+//                     ) : (
+//                       value || `Enter your ${field}`
+//                     )}
 //                   </span>
 //                 )}
 //                 {editField === field ? (
@@ -168,7 +471,10 @@
 //                     ✔
 //                   </span>
 //                 ) : (
-//                   <span className="edit-link" onClick={() => handleEdit(field, value || '')}>
+//                   <span
+//                     className="edit-link"
+//                     onClick={() => handleEdit(field, value || '')}
+//                   >
 //                     Edit
 //                   </span>
 //                 )}
@@ -182,266 +488,3 @@
 // }
 
 // export default Profile;
-
-
-
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './../styles/profile.css';
-import Tutor2 from './../assets/Tutor2.png';
-import { useAuth } from './../context/AuthContext';
-
-function Profile() {
-  const { user, updateProfilePicture, removeProfilePicture } = useAuth();
-  const navigate = useNavigate();
-
-  const [profile, setProfile] = useState({
-    name: '',
-    gender: '',
-    location: '',
-    birthday: '',
-    bio: '',
-    linkedin: '',
-    education: '',
-    skills: [],
-  });
-
-  const [editField, setEditField] = useState(null);
-  const [editValue, setEditValue] = useState('');
-  const [image, setImage] = useState(user?.profilePicture || Tutor2);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-      return;
-    }
-
-
-    fetchProfile();
-  }, [user, navigate]);
-
-  const fetchProfile = async () => {
-    try {
-      const response = await fetch('/api/profile', {
-        headers: {
-          'Authorization': `Bearer ${user.token}`
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setProfile(data);
-        if (data.profilePicture) {
-          setImage(data.profilePicture);
-          updateProfilePicture(data.profilePicture);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEdit = (field, value) => {
-    setEditField(field);
-    if (Array.isArray(value)) {
-      setEditValue(value.join(', '));
-    } else {
-      setEditValue(value || '');
-    }
-  };
-
-  const saveEdit = async () => {
-    try {
-      const updatedValue = editField === 'skills' 
-        ? editValue.split(',').map(v => v.trim()).filter(v => v)
-        : editValue;
-
-      const response = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
-        },
-        body: JSON.stringify({ [editField]: updatedValue })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setProfile(data);
-        setEditField(null);
-      }
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    }
-  };
-
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 5000000) { // 5MB limit
-        alert('Image size should be less than 5MB');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const base64Image = event.target.result;
-        try {
-          const response = await fetch('/api/profile/picture', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.token}`
-            },
-            body: JSON.stringify({ profilePicture: base64Image })
-          });
-
-          if (response.ok) {
-            setImage(base64Image);
-            updateProfilePicture(base64Image);
-          }
-        } catch (error) {
-          console.error('Error updating profile picture:', error);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemoveProfilePicture = async () => {
-    try {
-      const response = await fetch('/api/profile/picture', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
-        },
-        body: JSON.stringify({ profilePicture: null })
-      });
-
-      if (response.ok) {
-        setImage(Tutor2);
-        removeProfilePicture();
-      }
-    } catch (error) {
-      console.error('Error removing profile picture:', error);
-    }
-  };
-
-  if (!user) return null;
-  if (loading) return <div className="loading">Loading...</div>;
-
-  return (
-    <div className="profile-page">
-      <div className="profile-card">
-        {/* Profile Header */}
-        <div className="profile-header">
-          <div className="image-container">
-            <img src={image} alt="Profile" className="profile-image" />
-            <label htmlFor="file-upload" className="edit-image-icon">
-              &#9998;
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="file-input"
-            />
-            {image !== Tutor2 && (
-              <button 
-                className="remove-image-icon" 
-                onClick={handleRemoveProfilePicture}
-                title="Remove Profile Picture"
-              >
-                ✖
-              </button>
-            )}
-          </div>
-          <div className="profile-info">
-            <p className="profile-username">{user.username}</p>
-            <p className="profile-name">
-              {editField === 'name' ? (
-                <input
-                  type="text"
-                  placeholder="Enter your name"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                  className="inline-input"
-                />
-              ) : (
-                profile.name || 'Enter your name'
-              )}
-              <span className="edit-icon" onClick={() => handleEdit('name', profile.name)}>
-                &#9998;
-              </span>
-              {editField === 'name' && (
-                <span className="save-icon" onClick={saveEdit}>
-                  ✔
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-
-        {/* Profile Details */}
-        <div className="details-container">
-          <div className="profile-details">
-            {Object.entries(profile).map(([field, value]) => {
-              // Skip fields that shouldn't be displayed
-              if (['_id', '__v', 'userId', 'userType', 'name', 'profilePicture', 'createdAt', 'updatedAt'].includes(field)) {
-                return null;
-              }
-
-              return (
-                <div key={field} className="profile-row">
-                  <span className="profile-label">{field.charAt(0).toUpperCase() + field.slice(1)}</span>
-                  {editField === field ? (
-                    field === 'birthday' ? (
-                      <input
-                        type="date"
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        className="inline-input"
-                      />
-                    ) : (
-                      <input
-                        type="text"
-                        placeholder={`Enter your ${field}`}
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        className="inline-input"
-                      />
-                    )
-                  ) : (
-                    <span className="profile-value">
-                      {Array.isArray(value)
-                        ? value.length
-                          ? value.map((v, i) => <span key={i} className="skill-tag">{v}</span>)
-                          : `Enter your ${field}`
-                        : value || `Enter your ${field}`}
-                    </span>
-                  )}
-                  {editField === field ? (
-                    <span className="save-icon" onClick={saveEdit}>
-                      ✔
-                    </span>
-                  ) : (
-                    <span className="edit-link" onClick={() => handleEdit(field, value)}>
-                      Edit
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default Profile;

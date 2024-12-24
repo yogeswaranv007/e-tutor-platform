@@ -13,7 +13,6 @@ import SessionPage from "../components/one-to-one-Integration/SessionPage.jsx"
 import Availability from "../components/SetAvailability/SetAvailability.jsx"
 import Profile from '../pages/profile.jsx';
 import TutorProfile from '../pages/TutorProfile.jsx';
-import ProtectedRoute from "./ProtectedRuoute.jsx";
 import { useAuth } from "../context/AuthContext.jsx"
 import About from '../pages/AboutPage.jsx'
 import Chatbox from "../components/Chatbox/chatbox.jsx";

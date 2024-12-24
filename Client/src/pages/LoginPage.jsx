@@ -1,30 +1,87 @@
+// import React, { useState } from 'react';
+// import './../styles/LoginPage.css';
+// import { useAuth } from '../context/AuthContext'; // Import the AuthContext
+// import GraduationCap from '../assets/Graduation_Cap.png';
+// import MailIcon from '../assets/MailIcon.png';
+// import LockIcon from '../assets/LockIcon.png';
+// import GoogleIcon from '../assets/GoogleIcon.png';
+
+// function Login({ onClose = () => {}, onSignup = () => {} }) {
+//   const { login } = useAuth(); // Use login function from context
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [userType, setUserType] = useState('Student'); // Added user type selection
+//   const [error, setError] = useState('');
+//   const [loading, setLoading] = useState(false);
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     // Validate input fields
+//     if (!email || !password) {
+//       setError('All fields are required.');
+//       return;
+//     }
+
+//     setError(''); // Clear any existing errors
+//     setLoading(true); // Set loading state to true
+
+//     try {
+//       const response = await fetch('http://localhost:5000/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password, userType}), // Include user type in the request
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok) {
+//         alert('Login successful!');
+//         login(data.user); // Set the logged-in user data in the context
+//         onClose(); // Close the login modal
+//       } else {
+//         setError(data.error || 'User does not exist. Please sign up.');
+//       }
+//     } catch (err) {
+//       console.error('Error:', err);
+//       setError(
+//         'An unexpected error occurred. Please check your internet connection or contact support.'
+//       );
+//     } finally {
+//       setLoading(false); // Ensure loading is stopped
+//     }
+//   };
+// LoginPage.jsx
 import React, { useState } from 'react';
 import './../styles/LoginPage.css';
-import { useAuth } from '../context/AuthContext'; // Import the AuthContext
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import GraduationCap from '../assets/Graduation_Cap.png';
 import MailIcon from '../assets/MailIcon.png';
 import LockIcon from '../assets/LockIcon.png';
 import GoogleIcon from '../assets/GoogleIcon.png';
 
 function Login({ onClose = () => {}, onSignup = () => {} }) {
-  const { login } = useAuth(); // Use login function from context
+  const { login } = useAuth();
+  const navigate = useNavigate(); // Initialize useNavigate
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('Student'); // Added user type selection
+  const [userType, setUserType] = useState('Student');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate input fields
     if (!email || !password) {
       setError('All fields are required.');
       return;
     }
 
-    setError(''); // Clear any existing errors
-    setLoading(true); // Set loading state to true
+    setError('');
+    setLoading(true);
 
     try {
       const response = await fetch('http://localhost:5000/login', {
@@ -32,25 +89,35 @@ function Login({ onClose = () => {}, onSignup = () => {} }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, userType}), // Include user type in the request
+        body: JSON.stringify({ email, password, userType }),
       });
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.user) {
+        // Log the user data to verify structure
+        console.log('Login response:', data.user);
+        
+        // Store user data in context
+        login(data.user);
+        
+        // Navigate based on user type
+        if (data.user.userType === 'Student') {
+          navigate('/');
+        } else {
+          navigate('/');
+        }
+        
         alert('Login successful!');
-        login(data.user); // Set the logged-in user data in the context
-        onClose(); // Close the login modal
+        onClose();
       } else {
         setError(data.error || 'User does not exist. Please sign up.');
       }
     } catch (err) {
       console.error('Error:', err);
-      setError(
-        'An unexpected error occurred. Please check your internet connection or contact support.'
-      );
+      setError('An unexpected error occurred. Please check your internet connection or contact support.');
     } finally {
-      setLoading(false); // Ensure loading is stopped
+      setLoading(false);
     }
   };
 

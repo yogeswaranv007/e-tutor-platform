@@ -30,6 +30,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
 import AppRoutes from "./router/AppRoutes";
 import { AuthProvider } from "./context/AuthContext";
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:5000';
 
 function App() {
   return (
