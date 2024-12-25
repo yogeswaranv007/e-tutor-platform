@@ -130,26 +130,32 @@ function Profile() {
 
   const saveEdit = async () => {
     try {
-      if (!user) {
+      if (!user?._id) {
         console.error('User not authenticated');
         return;
       }
-
+  
       const updatedProfile = {
         ...profile,
         [editField]: editField === 'skills' ? editValue.split(',').map(v => v.trim()) : editValue,
         userId: user._id,
         userType: user.userType
       };
-
+  
+      console.log('Sending profile update:', updatedProfile); // Debug log
+  
       const response = await axios.put('/api/profile', updatedProfile);
+      
       if (response.data.success) {
         setProfile(response.data.profile);
+        setEditField(null);
+      } else {
+        console.error('Failed to update profile:', response.data.error);
       }
     } catch (error) {
-      console.error('Failed to save profile:', error);
+      console.error('Failed to save profile:', error?.response?.data?.error || error.message);
+      // You might want to show this error to the user
     }
-    setEditField(null);
   };
 
   const handleImageChange = async (e) => {

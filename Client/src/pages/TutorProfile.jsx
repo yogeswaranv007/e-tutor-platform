@@ -152,45 +152,56 @@ function TutorProfile() {
 
   const saveEdit = async () => {
     try {
-      if (!user) {
+      if (!user?._id) {
         console.error('User not authenticated');
         return;
       }
-
+  
       const updatedProfile = {
         ...profile,
         [editField]: editField === 'skills' ? editValue.split(',').map(v => v.trim()) : editValue,
         userId: user._id,
         userType: user.userType
       };
-
+  
       const response = await axios.put('/api/profile', updatedProfile);
+      
       if (response.data.success) {
         setProfile(response.data.profile);
+        setEditField(null);
+      } else {
+        console.error('Failed to update profile:', response.data.error);
       }
     } catch (error) {
-      console.error('Failed to save profile:', error);
+      console.error('Failed to save profile:', error?.response?.data?.error || error.message);
     }
-    setEditField(null);
   };
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && user?._id) {  // Add user?._id check
       try {
         const formData = new FormData();
         formData.append('image', file);
         formData.append('userId', user._id);
         formData.append('userType', user.userType);
-
-        await axios.post('/api/profile/image', formData, {
+  
+        console.log('Uploading image with userId:', user._id); // Add this debug log
+  
+        const response = await axios.post('/api/profile/image', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
-
-        fetchProfileImage();
+  
+        if (response.data.success) {
+          await fetchProfileImage();
+        } else {
+          console.error('Failed to upload image:', response.data.error);
+        }
       } catch (error) {
         console.error('Failed to upload image:', error);
       }
+    } else {
+      console.error('No file selected or user not authenticated');
     }
   };
 

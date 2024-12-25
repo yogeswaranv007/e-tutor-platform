@@ -4,7 +4,8 @@ const StudentProfileSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
-    required: true
+    required: true,
+    unique: true
   },
   name: String,
   gender: String,
