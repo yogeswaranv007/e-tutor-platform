@@ -195,4 +195,22 @@ router.get('/api/profile/image/:userId', async (req, res) => {
   }
 });
 
+router.get('/api/tutors', async (req, res) => {
+  try {
+    const tutors = await TutorProfile.find({});
+ 
+    res.status(200).json({
+      success: true,
+      tutors
+    });
+  } catch (error) {
+    console.error('Error fetching tutors:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch tutors' 
+    });
+  }
+});
+
+
 module.exports = router;

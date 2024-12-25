@@ -1,17 +1,41 @@
-import React from 'react';
-import '../../styles/common/SearchBar.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../assets/search-icon.png';
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch, placeholder = "Search by topic or tutor name...", isTransitioning = false }) => {
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate('/find-tutors', { state: { searchQuery: searchValue } });
+  };
+
+  const handleInputClick = () => {
+    navigate('/find-tutors');
+  };
+
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+    onSearch?.(e.target.value);
+  };
+
   return (
-    <div className="search-bar">
-      <input type="text" placeholder="What would you like to learn?" />
-      <button className="search-button">
+    <form onSubmit={handleSubmit} className={`search-bar ${isTransitioning ? 'search-bar-transition' : ''}`}>
+      <input
+        type="text"
+        value={searchValue}
+        onChange={handleChange}
+        onClick={handleInputClick}
+        placeholder={placeholder}
+        className="search-input"
+        style={{ cursor: 'pointer' }}
+      />
+      <button type="submit" className="search-button">
         <img src={searchIcon} alt="Search" className="search-icon" />
       </button>
-    </div>
+    </form>
   );
 };
 
 export default SearchBar;
-

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/homepage/Banner.css';
 import rightImage from '../../assets/Banner-image.png'; 
-import searchIcon from '../../assets/search-icon.png'; 
+import SearchBar from '../common/SearchBar'; 
 
 const Banner = () => {
   return (
@@ -17,12 +17,7 @@ const Banner = () => {
             <img src={rightImage} alt="Tutoring session" />
           </div>
         </div>
-        <div className="search-bar">
-          <input type="text" placeholder="What would you like to learn?" />
-          <button className="search-button">
-            <img src={searchIcon} alt="Search" className="search-icon" />
-          </button>
-        </div>
+        <SearchBar/>
 
         <div className="most-searched">
           <span>Most searched :</span>

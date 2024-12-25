@@ -285,7 +285,7 @@ function TutorProfile() {
                           </button>
                         </div>
                       ) : field === 'hourlyRate' ? (
-                        profile[field] ? `$${profile[field]}/hr` : 'Enter your hourly rate'
+                        profile[field] ? `${profile[field]}/hr` : 'Enter your hourly rate'
                       ) : field === 'birthday' ? (
                         profile[field] ? new Date(profile[field]).toLocaleDateString() : 'Enter your birthday'
                       ) : profile[field] || `Enter your ${field}`}
