@@ -8,6 +8,8 @@ require('dotenv').config();
 const signupRoutes = require('./routes/signup');
 const loginRoutes = require('./routes/login');
 const profileRoutes = require('./routes/profile');
+const tutorDashboardRoutes = require('./routes/tutorDashboard');
+const availabilityRoutes = require('./routes/availabityRoutes');
 
 const app = express();
 
@@ -47,6 +49,8 @@ const upload = multer({
 app.use('/', signupRoutes);
 app.use('/', loginRoutes);
 app.use('/', profileRoutes);
+app.use('/', tutorDashboardRoutes);
+app.use('/', availabilityRoutes);
 
 // Root route
 app.get('/', (req, res) => {

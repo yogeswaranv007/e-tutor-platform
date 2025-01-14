@@ -17,7 +17,7 @@ import { useAuth } from "../context/AuthContext.jsx"
 import About from '../pages/AboutPage.jsx'
 import Chatbox from "../components/Chatbox/chatbox.jsx";
 import SearchTut from "../components/Searchtut/searchtut.jsx";
-
+import Calendar from "../components/Sessionbook/sessionbook.jsx"
 function AppRoutes() {
   const { user } = useAuth();
   return (
@@ -38,6 +38,7 @@ function AppRoutes() {
       <Route path="/about" element={<About/>} />
       <Route path="/chats" element={<Chatbox/>} />
       <Route path="/view-profile/:tutorId" element={<SearchTut />} />
+      <Route path="/book-session" element={<Calendar/>} />
     </Routes>
   );
 }

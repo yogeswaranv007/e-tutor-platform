@@ -1,57 +1,118 @@
-import React, { useState } from 'react';
-import { Calendar } from 'lucide-react';
-import "../../styles/SetAvailability/SetAvailability.css"
-
-// Sample time slots
-const TIME_SLOTS = [
-  '08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM',
-  '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM',
-  '04:00 PM', '05:00 PM', '06:00 PM', '07:00 PM'
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
+import './../../styles/SetAvailability/SetAvailability.css';
 
 const Availability = () => {
-  const [selectedDates, setSelectedDates] = useState([]);
-  const [availabilitySlots, setAvailabilitySlots] = useState({});
+  const { user } = useAuth();
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
   const [confirmedSessions, setConfirmedSessions] = useState([]);
+  const [tutorProfile, setTutorProfile] = useState(null);
+  const timeSlots = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '01:00-02:00', '02:00-03:00', '03:00-04:00'];
 
-  // Toggle date selection
-  const handleDateSelect = (date) => {
-    setSelectedDates(prev =>
-      prev.includes(date)
-        ? prev.filter(d => d !== date)
-        : [...prev, date]
-    );
+  useEffect(() => {
+    const fetchTutorProfile = async () => {
+      if (!user?._id) return;
+
+      try {
+        const response = await axios.get('http://localhost:5000/api/profile', {
+          params: { 
+            userId: user._id,
+            userType: 'Tutor'
+          }
+        });
+        
+        if (response.data.success) {
+          setTutorProfile(response.data.profile);
+        }
+      } catch (error) {
+        console.error('Error fetching tutor profile:', error);
+      }
+    };
+
+    const fetchTutorSessions = async () => {
+      if (!user?._id) return;
+
+      try {
+        const response = await axios.get(`http://localhost:5000/api/set-availability/tutor/${user._id}`);
+        if (response.data.success) {
+          setConfirmedSessions(response.data.sessions);
+        }
+      } catch (error) {
+        console.error('Error fetching sessions:', error);
+      }
+    };
+
+    if (user?._id) {
+      fetchTutorProfile();
+      fetchTutorSessions();
+    }
+  }, [user?._id]);
+
+  const changeMonth = (direction) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + direction);
+    setCurrentDate(newDate);
   };
 
-  // Toggle time slot for a specific date
-  const toggleTimeSlot = (date, slot) => {
-    setAvailabilitySlots(prev => {
-      const currentDateSlots = prev[date] || [];
-      const newSlots = currentDateSlots.includes(slot)
-        ? currentDateSlots.filter(s => s !== slot)
-        : [...currentDateSlots, slot];
-
-      return {
-        ...prev,
-        [date]: newSlots
-      };
-    });
+  const getDaysInMonth = () => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const days = new Date(year, month + 1, 0).getDate();
+    const startDay = new Date(year, month, 1).getDay();
+    return { days, startDay };
   };
 
-  // Confirm availability for selected dates
-  const handleConfirm = () => {
-    selectedDates.forEach(date => {
-      (availabilitySlots[date] || []).forEach(slot => {
-        const session = {
-          date: new Date(date),
-          time: slot
-        };
-        setConfirmedSessions(prev => [...prev, session]);
-      });
-    });
-    setSelectedDates([]);
-    setAvailabilitySlots({});
+  const isDateDisabled = (day) => {
+    const dateToCheck = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return dateToCheck < today;
   };
+
+  const handleDateClick = (day) => {
+    if (isDateDisabled(day)) return;
+    setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
+    setSelectedTime(null);
+  };
+
+  const handleTimeSlotClick = (timeSlot) => {
+    setSelectedTime(timeSlot);
+  };
+
+  const handleConfirm = async () => {
+    if (!selectedDate || !selectedTime || !tutorProfile) {
+      alert('Please select date, time and ensure profile is loaded.');
+      return;
+    }
+
+    const session = {
+      date: selectedDate.toISOString().split('T')[0],
+      time: selectedTime,
+      tutorId: user._id,
+      tutor: tutorProfile.name,
+      lesson: tutorProfile.TutoringTopics,
+      rate: tutorProfile.hourlyRate,
+      duration: '1 hour',
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/set-availability', session);
+      if (response.data.success) {
+        setConfirmedSessions((prev) => [...prev, response.data.session]);
+        alert('Session confirmed successfully!');
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to confirm session');
+    }
+
+    setSelectedDate(null);
+    setSelectedTime(null);
+  };
+
+  const { days, startDay } = getDaysInMonth();
 
   return (
     <div className="availability-container">
@@ -61,67 +122,68 @@ const Availability = () => {
         <div className="calendar-section">
           <div className="calendar-container">
             <div className="calendar-header">
-              <Calendar className="mr-2" />
-              <span>Select Dates</span>
+              <button onClick={() => changeMonth(-1)}>&lt;</button>
+              <span>{currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+              <button onClick={() => changeMonth(1)}>&gt;</button>
             </div>
             <div className="calendar-grid">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
                 <div key={day} className="day-name">{day}</div>
               ))}
-              {selectedDates.map(date => (
+              {Array.from({ length: startDay }).map((_, i) => (
+                <div key={`empty-${i}`} className="calendar-date empty"></div>
+              ))}
+              {Array.from({ length: days }, (_, i) => i + 1).map((day) => (
                 <div
-                  key={date}
-                  className={`calendar-date ${new Date().toDateString() === new Date(date).toDateString() ? 'today' : ''}`}
-                  onClick={() => handleDateSelect(date)}
+                  key={day}
+                  className={`calendar-date ${
+                    selectedDate && selectedDate.getDate() === day && selectedDate.getMonth() === currentDate.getMonth() ? 'selected' : ''
+                  } ${isDateDisabled(day) ? 'disabled' : ''}`}
+                  onClick={() => handleDateClick(day)}
                 >
-                  {new Date(date).getDate()}
+                  {day}
                 </div>
               ))}
             </div>
           </div>
           <div className="time-slots-section">
             <div className="selected-date">
-              {selectedDates.length > 0 ? `Selected Dates: ${selectedDates.join(', ')}` : 'Select Dates'}
+              {selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' }) : "Select Time Slot"}
             </div>
             <div className="time-slots">
-              {selectedDates.map(date => (
-                <div key={date} className="date-slots">
-                  <h4>{new Date(date).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' })}</h4>
-                  <div className="slots">
-                    {TIME_SLOTS.map(slot => (
-                      <div
-                        key={slot}
-                        className={`time-slot ${(availabilitySlots[date] || []).includes(slot) ? 'selected' : ''}`}
-                        onClick={() => toggleTimeSlot(date, slot)}
-                      >
-                        {slot}
-                      </div>
-                    ))}
-                  </div>
+              {timeSlots.map((timeSlot) => (
+                <div
+                  key={timeSlot}
+                  className={`time-slot ${selectedTime === timeSlot ? 'selected' : ''}`}
+                  onClick={() => handleTimeSlotClick(timeSlot)}
+                >
+                  {timeSlot}
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="set-availability">
+        <div>
           <div className="availability-details">
             <h3>Set Availability</h3>
-            <p><strong>Tutor:</strong> Ana de Armas</p>
-            <p><strong>Lesson:</strong> Geometry</p>
-            <p><strong>Rate:</strong> Rs. 100</p>
+            <p><strong>Tutor:</strong> {tutorProfile?.name || 'Loading...'}</p>
+            <p><strong>Lesson:</strong> {tutorProfile?.TutoringTopics || 'Loading...'}</p>
+            <p><strong>Rate:</strong> Rs. {tutorProfile?.hourlyRate || 'Loading...'}</p>
+            <p><strong>Date:</strong> {selectedDate ? selectedDate.toLocaleDateString() : 'Select a date'}</p>
+            <p><strong>Time:</strong> {selectedTime || 'Select a time slot'}</p>
             <p><strong>Duration:</strong> 1 hour</p>
-            <button className="confirm-button" onClick={handleConfirm}>
-              Confirm Availability
-            </button>
+            <button className="confirm-button" onClick={handleConfirm}>Confirm</button>
           </div>
           <div className="confirmed-sessions">
             <h3>Confirmed Sessions</h3>
             {confirmedSessions.length > 0 ? (
               confirmedSessions.map((session, index) => (
                 <div key={index} className="confirmed-session">
-                  <p>{session.date.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
-                  <p>{session.time}</p>
+                  <p><strong>Date:</strong> {session.date}</p>
+                  <p><strong>Time:</strong> {session.time}</p>
+                  <p><strong>Lesson:</strong> {session.lesson}</p>
+                  <p><strong>Rate:</strong> Rs. {session.rate}</p>
                 </div>
               ))
             ) : (

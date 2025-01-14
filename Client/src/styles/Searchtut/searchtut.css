@@ -175,3 +175,26 @@
     height: 45px;
     border-radius: 100px;
   }
+
+
+  .sessions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .session-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .session-date {
+    min-width: 70px;
+  }
+  
+  .no-sessions {
+    text-align: center;
+    color: #666;
+    margin-top: 10px;
+  }

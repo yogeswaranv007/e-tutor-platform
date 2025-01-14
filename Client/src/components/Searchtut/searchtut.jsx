@@ -14,6 +14,7 @@ function SearchTut() {
     experience: '',
     expertiseIn: '',
     TutoringTopics: '',
+    TutoringLanguage: [],
     hourlyRate: '',
     bio: '',
     linkedin: '',
@@ -25,9 +26,7 @@ function SearchTut() {
   const [profileImage, setProfileImage] = useState(dpimg);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [availableSessions] = useState([
-    '09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00'
-  ]);
+  const [availableSessions, setAvailableSessions] = useState([]);
 
   useEffect(() => {
     if (!tutorId) {
@@ -45,6 +44,7 @@ function SearchTut() {
         if (response.data.success) {
           setProfile(response.data.profile);
           await fetchProfileImage();
+          await fetchAvailableSessions();
         } else {
           setError('Failed to load tutor profile');
         }
@@ -71,6 +71,30 @@ function SearchTut() {
       }
     };
 
+    const fetchAvailableSessions = async () => {
+      try {
+        const response = await axios.get(`/api/set-availability/tutor/${tutorId}`);
+        if (response.data.success) {
+          const sessions = response.data.sessions;
+          const currentDate = new Date();
+          currentDate.setHours(0, 0, 0, 0);
+          const futureSessions = sessions.filter(session => 
+            new Date(session.date) >= currentDate
+          );
+          const sortedSessions = futureSessions.sort((a, b) => {
+            const dateCompare = new Date(a.date) - new Date(b.date);
+            if (dateCompare === 0) {
+              return a.time.localeCompare(b.time);
+            }
+            return dateCompare;
+          });
+          setAvailableSessions(sortedSessions);
+        }
+      } catch (error) {
+        console.error('Failed to fetch available sessions:', error);
+      }
+    };
+
     fetchProfileData();
     return () => {
       if (profileImage !== dpimg) {
@@ -85,6 +109,20 @@ function SearchTut() {
 
   const handleBookSessionClick = () => {
     navigate('/book-session', { state: { tutorId } });
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const formatTime = (timeString) => {
+    const [hour, minute] = timeString.split(':');
+    const formattedHour = hour > 12 ? hour - 12 : hour;
+    const amPm = hour >= 12 ? 'PM' : 'AM';
+    return `${formattedHour}:${minute} ${amPm}`;
   };
 
   if (loading) {
@@ -134,12 +172,16 @@ function SearchTut() {
         </div>
 
         <div className="available-sessions">
-          <h3>Today's Available Sessions</h3>
-          {availableSessions.map((session, index) => (
-            <button key={index} className="session-time">
-              {session}
-            </button>
-          ))}
+          <h3>Available Sessions</h3>
+          {availableSessions.length > 0 ? (
+            availableSessions.map((session, index) => (
+              <button key={index} className="session-time">
+                {formatDate(session.date)} - {formatTime(session.time)}
+              </button>
+            ))
+          ) : (
+            <p>No sessions available</p>
+          )}
         </div>
       </div>
 
@@ -158,6 +200,13 @@ function SearchTut() {
           <section className="info-section">
             <h3>Tutoring Topics</h3>
             <p>{profile.TutoringTopics || 'Topics not specified'}</p>
+          </section>
+
+          <section className="info-section">
+            <h3>Tutoring Languages</h3>
+            <p>{profile.TutoringLanguage?.length > 0 
+              ? profile.TutoringLanguage.join(', ') 
+              : 'Languages not specified'}</p>
           </section>
 
           {profile.skills?.length > 0 && (
@@ -188,32 +237,31 @@ function SearchTut() {
             </p>
           </section>
 
-
-<section className="info-section">
-  <h3>Reviews</h3>
-  <div style={{ display: 'flex', gap: '20px', marginTop: '15px' }}>
-    <div className="review-card">
-      <img src={dpimg} alt="Student" className="review-profile-img" />
-      <p className="review-text">
-        Mohit helped me channel my preparation and put focused efforts in the
-        right direction. He is really good with cutting the noise off and
-        build focus on the one goal that matters.
-      </p>
-      <p className="review-author">Sydney Sweeney</p>
-      <p className="review-role">ML engineer, NVIDIA</p>
-    </div>
-    
-    <div className="review-card">
-      <img src={jesse} alt="Student" className="review-profile-img" />
-      <p className="review-text">
-        The way he understands the students and sets plans accordingly, that
-        helps me a lot. He helps me in this journey to IIT Bombay.
-      </p>
-      <p className="review-author">Sajith</p>
-      <p className="review-role">Engineer, Microsoft</p>
-    </div>
-  </div>
-</section>
+          <section className="info-section">
+            <h3>Reviews</h3>
+            <div style={{ display: 'flex', gap: '20px', marginTop: '15px' }}>
+              <div className="review-card">
+                <img src={dpimg} alt="Student" className="review-profile-img" />
+                <p className="review-text">
+                  Mohit helped me channel my preparation and put focused efforts in the
+                  right direction. He is really good with cutting the noise off and
+                  build focus on the one goal that matters.
+                </p>
+                <p className="review-author">Sydney Sweeney</p>
+                <p className="review-role">ML engineer, NVIDIA</p>
+              </div>
+              
+              <div className="review-card">
+                <img src={jesse} alt="Student" className="review-profile-img" />
+                <p className="review-text">
+                  The way he understands the students and sets plans accordingly, that
+                  helps me a lot. He helps me in this journey to IIT Bombay.
+                </p>
+                <p className="review-author">Sajith</p>
+                <p className="review-role">Engineer, Microsoft</p>
+              </div>
+            </div>
+          </section>
 
           <section className="info-section" style={{textAlign: 'center', border: 'none'}}>
             <p style={{marginBottom: '10px'}}>Any Questions?</p>

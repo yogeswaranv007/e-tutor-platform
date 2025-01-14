@@ -62,8 +62,6 @@ const Navbar = () => {
     if (!user) {
       return (
         <>
-          <NavLink to="/find-tutors" activelassname="active-link">Find Tutors</NavLink>
-          <NavLink to="/chats" activelassname="active-link">Chats</NavLink>
           <NavLink to="/about" activelassname="active-link">About</NavLink>
         </>
       );

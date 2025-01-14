@@ -19,6 +19,7 @@ const TutorProfileSchema = new mongoose.Schema({
   experience: String,
   expertiseIn: String,
   TutoringTopics: String,
+  TutoringLanguage: [String],
   hourlyRate: Number,
   skills: [String],
   profileImage: {

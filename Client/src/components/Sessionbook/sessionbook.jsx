@@ -8,7 +8,7 @@ function Calendar() {
   const [selectedTime, setSelectedTime] = useState(null);
   const navigate = useNavigate(); // Initialize navigate
 
-  const times = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00'];
+  const times = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '01:00-02:00', '02:00-03:00', '01:00-02:00'];
 
   const getDaysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
   const getFirstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
