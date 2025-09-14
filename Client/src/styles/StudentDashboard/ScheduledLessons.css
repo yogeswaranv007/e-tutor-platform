@@ -57,6 +57,30 @@
   margin: 0 auto;
 }
 
+.tutor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #FE6635;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.session-status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  min-width: 60px;
+}
+
 .options-icon {
   width: 40px;
   height: 40px;
@@ -88,6 +112,61 @@
 
 .lesson-content button:hover {
   opacity: 0.9;
+}
+
+.start-session-btn {
+  background-color: #FE6635 !important;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: bold;
+  align-self: center;
+}
+
+.start-session-btn:hover {
+  opacity: 0.9;
+}
+
+.completed-session {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cancelled-session {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.no-sessions {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  width: 100%;
+}
+
+.no-sessions p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {

@@ -76,12 +76,27 @@ function SearchTut() {
         const response = await axios.get(`/api/set-availability/tutor/${tutorId}`);
         if (response.data.success) {
           const sessions = response.data.sessions;
-          const currentDate = new Date();
-          currentDate.setHours(0, 0, 0, 0);
-          const futureSessions = sessions.filter(session => 
-            new Date(session.date) >= currentDate
-          );
-          const sortedSessions = futureSessions.sort((a, b) => {
+          const now = new Date();
+          
+          const availableSessions = sessions.filter(session => {
+            // Parse session date and time
+            const sessionDate = new Date(session.date);
+            const [startTime] = session.time.split('-');
+            const [sessionHour, sessionMinute] = startTime.split(':').map(Number);
+            
+            // Create session datetime
+            const sessionDateTime = new Date(sessionDate);
+            sessionDateTime.setHours(sessionHour, sessionMinute, 0, 0);
+            
+            // Calculate 30 minutes before session
+            const cutoffTime = new Date(sessionDateTime);
+            cutoffTime.setMinutes(cutoffTime.getMinutes() - 30);
+            
+            // Only show sessions that are at least 30 minutes in the future
+            return sessionDateTime > now && now < cutoffTime;
+          });
+          
+          const sortedSessions = availableSessions.sort((a, b) => {
             const dateCompare = new Date(a.date) - new Date(b.date);
             if (dateCompare === 0) {
               return a.time.localeCompare(b.time);
@@ -105,10 +120,6 @@ function SearchTut() {
 
   const handleMessageClick = () => {
     navigate('/chats', { state: { tutorId } });
-  };
-
-  const handleBookSessionClick = () => {
-    navigate('/book-session', { state: { tutorId } });
   };
 
   const formatDate = (dateString) => {
@@ -166,16 +177,22 @@ function SearchTut() {
           <p className="hourly-rate">
             Hourly rate: Rs.{profile.hourlyRate || 'Not specified'}
           </p>
-          <button className="book-session-btn" onClick={handleBookSessionClick}>
-            Book Session
-          </button>
         </div>
 
         <div className="available-sessions">
           <h3>Available Sessions</h3>
           {availableSessions.length > 0 ? (
             availableSessions.map((session, index) => (
-              <button key={index} className="session-time">
+              <button 
+                key={index} 
+                className="session-time"
+                onClick={() => navigate('/session-confirmation', { 
+                  state: { 
+                    session: session,
+                    tutorId: tutorId 
+                  } 
+                })}
+              >
                 {formatDate(session.date)} - {formatTime(session.time)}
               </button>
             ))

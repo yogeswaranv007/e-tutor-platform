@@ -1,0 +1,300 @@
+/* SessionPayment.css */
+.payment-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
+  font-family: Arial, sans-serif;
+  width: 100vw;
+  height: 100vh;
+}
+
+.payment-page h2 {
+  font-size: 24px;
+  margin-bottom: 40px;
+  margin-left: 400px;
+  font-size: 30px;
+}
+
+.payment-page .highlight {
+  color: #FE6635;
+}
+
+.payment-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.payment-info {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;
+  margin-left: 150px;
+}
+
+.session-details {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 40%;
+  height: fit-content;
+}
+
+.payment-info h3, .session-details h3 {
+  background-color: #FE6635;
+  color: #fff;
+  padding: 10px 20px;
+  margin: -20px -20px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 18px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.required {
+  color: #ff0000;
+}
+
+.input-group input {
+  width: 97%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.card-icons {
+  position: absolute;
+  top: 70%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+.Visaicon{
+  margin-top: 7px;
+  width: 30px;
+  height:20px;
+}
+
+.Mastericon{
+  margin-top: 2px;
+  width: 30px;
+  height:30px;
+}
+
+.proceed-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #FE6635;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.proceed-button:hover {
+  background-color: #ff7a4d;
+}
+
+.or-text {
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
+  font-weight: bold;
+}
+
+.gpay-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.gpay-icon {
+  height: 24px;
+  margin-right: 10px;
+}
+
+.paypal-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.paypal-container .paypal-buttons {
+  width: 100% !important;
+}
+
+/* Session Details Styling */
+.session-info {
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row .label {
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
+}
+
+.info-row .value {
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.total-row {
+  background-color: #f8f9fa;
+  padding: 12px;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.total-amount {
+  color: #FE6635 !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+.session-summary {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border-left: 4px solid #FE6635;
+}
+
+.session-summary h4 {
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+
+.session-summary p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.go-back-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  color: #FE6635;
+  border: 2px solid #FE6635;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  margin-top: 15px;
+}
+
+.go-back-btn:hover {
+  background-color: #FE6635;
+  color: white;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+  font-size: 16px;
+}
+
+.error button {
+  background-color: #FE6635;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.error button:hover {
+  opacity: 90%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payment-container {
+    flex-direction: column;
+  }
+  
+  .payment-info {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .session-details {
+    width: 100%;
+  }
+  
+  .payment-page h2 {
+    margin-left: 0;
+    text-align: center;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-page {
+    padding: 20px 10px;
+  }
+  
+  .payment-page h2 {
+    font-size: 20px;
+  }
+  
+  .payment-info,
+  .session-details {
+    padding: 15px;
+  }
+  
+  .payment-info h3,
+  .session-details h3 {
+    margin: -15px -15px 15px;
+    padding: 8px 15px;
+    font-size: 16px;
+  }
+}

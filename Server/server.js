@@ -10,6 +10,7 @@ const loginRoutes = require('./routes/login');
 const profileRoutes = require('./routes/profile');
 const tutorDashboardRoutes = require('./routes/tutorDashboard');
 const availabilityRoutes = require('./routes/availabityRoutes');
+const bookedSessionsRoutes = require('./routes/bookedSessions');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use('/', loginRoutes);
 app.use('/', profileRoutes);
 app.use('/', tutorDashboardRoutes);
 app.use('/', availabilityRoutes);
+app.use('/', bookedSessionsRoutes);
 
 // Root route
 app.get('/', (req, res) => {
