@@ -23,28 +23,42 @@ const ProfileInfo = () => {
       }
 
       try {
-        const [dashboardResponse, profileImageResponse] = await Promise.all([
-          axios.get('http://localhost:5000/api/tutor/dashboard', {
-            params: { tutorId: user._id },
-          }),
-          axios.get(`http://localhost:5000/api/profile/image/${user._id}`, {
+        const dashboardResponse = await axios.get('http://localhost:5000/api/tutor/dashboard', {
+          params: { tutorId: user._id },
+        });
+
+        let imageUrl = null;
+        try {
+          const profileImageResponse = await axios.get(`http://localhost:5000/api/profile/image/${user._id}`, {
             params: { userType: 'Tutor' },
             responseType: 'arraybuffer',
-          }),
-        ]);
+          });
 
-        const imageUrl = URL.createObjectURL(
-          new Blob([profileImageResponse.data], {
-            type: profileImageResponse.headers['content-type'],
-          })
-        );
+          imageUrl = URL.createObjectURL(
+            new Blob([profileImageResponse.data], {
+              type: profileImageResponse.headers['content-type'],
+            })
+          );
+        } catch (imgError) {
+          console.log('Profile image not found, using default image');
+        }
 
         setDashboardData({
           ...dashboardResponse.data.dashboardData,
           imageUrl,
         });
       } catch (err) {
-        console.error('Error fetching dashboard data or profile image:', err);
+        console.error('Error fetching dashboard data:', err);
+        if (err?.response?.status === 404) {
+          setDashboardData({
+            email: user?.email || '',
+            name: user?.username || 'Tutor',
+            location: '',
+            skills: [],
+            experience: ''
+          });
+          return;
+        }
         setError(err);
       }
     };
@@ -62,11 +76,12 @@ const ProfileInfo = () => {
           `http://localhost:5000/api/set-availability/tutor/${user._id}`
         );
         if (response.data.success) {
-          setConfirmedSessions(response.data.sessions);
+          setConfirmedSessions(response.data.sessions || []);
         }
       } catch (error) {
         console.error('Error fetching confirmed sessions:', error);
-        setError(error);
+        // Don't set error state for sessions - just keep it empty
+        setConfirmedSessions([]);
       } finally {
         setLoading(false);
       }
@@ -84,10 +99,15 @@ const ProfileInfo = () => {
     return <div className="profile-info-container">Loading...</div>;
   }
 
-  if (error) {
+  // Only show error if it's a critical error (dashboard data fetch failed)
+  if (error && !dashboardData) {
     return (
       <div className="profile-info-container">
-        Error: {error.message || 'Something went wrong!'}
+        <div className="error-message">
+          <h3>Unable to load dashboard</h3>
+          <p>{error.message || 'Something went wrong!'}</p>
+          <p>Please try refreshing the page or contact support if the issue persists.</p>
+        </div>
       </div>
     );
   }
@@ -140,7 +160,7 @@ const ProfileInfo = () => {
       </div>
 
       <p className="profile-info-confirmed-sessions-head">Confirmed Sessions:</p>
-      {confirmedSessions.length > 0 ? (
+      {confirmedSessions && confirmedSessions.length > 0 ? (
         confirmedSessions.map((session, index) => (
           <div key={session._id || index} className="profile-info-box">
             <p>
@@ -167,7 +187,10 @@ const ProfileInfo = () => {
         ))
       ) : (
         <div className="profile-info-box">
-          <p>No confirmed sessions</p>
+          <p>No available sessions set for this tutor.</p>
+          <p style={{ fontSize: '0.9em', marginTop: '8px', color: '#666' }}>
+            Click "Set Availability" above to schedule new sessions.
+          </p>
         </div>
       )}
 

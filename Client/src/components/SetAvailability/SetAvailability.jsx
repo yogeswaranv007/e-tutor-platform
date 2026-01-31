@@ -10,6 +10,12 @@ const Availability = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [confirmedSessions, setConfirmedSessions] = useState([]);
   const [tutorProfile, setTutorProfile] = useState(null);
+  const [sessionDetails, setSessionDetails] = useState({
+    tutorName: '',
+    lesson: '',
+    rate: '',
+    duration: '1 hour'
+  });
   const timeSlots = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '01:00-02:00', '02:00-03:00', '03:00-04:00'];
 
   useEffect(() => {
@@ -25,7 +31,14 @@ const Availability = () => {
         });
         
         if (response.data.success) {
-          setTutorProfile(response.data.profile);
+          const profile = response.data.profile;
+          setTutorProfile(profile);
+          setSessionDetails((prev) => ({
+            tutorName: profile?.name || prev.tutorName,
+            lesson: profile?.TutoringTopics || prev.lesson,
+            rate: profile?.hourlyRate || prev.rate,
+            duration: prev.duration || '1 hour'
+          }));
         }
       } catch (error) {
         console.error('Error fetching tutor profile:', error);
@@ -83,21 +96,31 @@ const Availability = () => {
   };
 
   const handleConfirm = async () => {
-    if (!selectedDate || !selectedTime || !tutorProfile) {
-      alert('Please select date, time and ensure profile is loaded.');
+    if (!selectedDate || !selectedTime) {
+      alert('Please select date and time.');
+      return;
+    }
+
+    const tutorName = sessionDetails.tutorName || tutorProfile?.name || '';
+    const lesson = sessionDetails.lesson || tutorProfile?.TutoringTopics || '';
+    const rate = sessionDetails.rate || tutorProfile?.hourlyRate || '';
+    const duration = sessionDetails.duration || '1 hour';
+
+    if (!tutorName || !lesson || !rate || !duration) {
+      alert('Please provide tutor name, lesson, rate, and duration before confirming.');
       return;
     }
 
     const session = {
-      date: selectedDate.getFullYear() + '-' + 
-            String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+      date: selectedDate.getFullYear() + '-' +
+            String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
             String(selectedDate.getDate()).padStart(2, '0'),
       time: selectedTime,
       tutorId: user._id,
-      tutor: tutorProfile.name,
-      lesson: tutorProfile.TutoringTopics,
-      rate: tutorProfile.hourlyRate,
-      duration: '1 hour',
+      tutor: tutorName,
+      lesson,
+      rate: Number(rate),
+      duration,
     };
 
     try {
@@ -169,12 +192,47 @@ const Availability = () => {
         <div>
           <div className="availability-details">
             <h3>Set Availability</h3>
-            <p><strong>Tutor:</strong> {tutorProfile?.name || 'Loading...'}</p>
-            <p><strong>Lesson:</strong> {tutorProfile?.TutoringTopics || 'Loading...'}</p>
-            <p><strong>Rate:</strong> Rs. {tutorProfile?.hourlyRate || 'Loading...'}</p>
+            <p><strong>Tutor:</strong> {tutorProfile?.name || user?.username || 'Tutor'}</p>
+            {!tutorProfile?.name && (
+              <p className="availability-hint">
+                Please update your name in profile settings.
+              </p>
+            )}
+            <p><strong>Lesson:</strong> {tutorProfile?.TutoringTopics || sessionDetails.lesson || ''}</p>
+            {!tutorProfile?.TutoringTopics && (
+              <div className="availability-input">
+                <input
+                  type="text"
+                  value={sessionDetails.lesson}
+                  onChange={(e) => setSessionDetails({ ...sessionDetails, lesson: e.target.value })}
+                  placeholder="Enter lesson/subject"
+                />
+              </div>
+            )}
+            <p><strong>Rate:</strong> Rs. {tutorProfile?.hourlyRate || sessionDetails.rate || ''}</p>
+            {!tutorProfile?.hourlyRate && (
+              <div className="availability-input">
+                <input
+                  type="number"
+                  min="0"
+                  value={sessionDetails.rate}
+                  onChange={(e) => setSessionDetails({ ...sessionDetails, rate: e.target.value })}
+                  placeholder="Enter hourly rate"
+                />
+              </div>
+            )}
             <p><strong>Date:</strong> {selectedDate ? selectedDate.toLocaleDateString() : 'Select a date'}</p>
             <p><strong>Time:</strong> {selectedTime || 'Select a time slot'}</p>
-            <p><strong>Duration:</strong> 1 hour</p>
+            {!sessionDetails.duration && (
+              <div className="availability-input">
+                <input
+                  type="text"
+                  value={sessionDetails.duration}
+                  onChange={(e) => setSessionDetails({ ...sessionDetails, duration: e.target.value })}
+                  placeholder="Enter duration (e.g., 1 hour)"
+                />
+              </div>
+            )}
             <button className="confirm-button" onClick={handleConfirm}>Confirm</button>
           </div>
           <div className="confirmed-sessions">
